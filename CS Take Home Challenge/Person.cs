@@ -22,11 +22,5 @@ namespace CS_Take_Home_Challenge
             this.Phone = phone;
             this.IsActive = isActive;
         }
-
-        //// for nice printing of a Person
-        //public override string ToString()
-        //{
-        //    return String.Format("name: {0}, address: {1}, phone: {2}, isValid: {3}", Name, Address, Phone, IsActive);
-        //}
     }
 }

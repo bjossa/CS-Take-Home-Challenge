@@ -21,21 +21,9 @@ namespace CS_Take_Home_Challenge
     public partial class MainWindow : Window
     {
 
-        PersonFileParser fileParser = new PersonFileParser();
-        string filePath = "C:\\Users\\eric.raywood\\Desktop\\C# intro project\\Data.txt";
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = fileParser;
-        }
-
-        // when the "Show People" button is clicked, do the parsing to populate the 'People' field in our PersonFileParser, so it is displayed
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (fileParser.People.Count == 0)
-            {
-                fileParser.ParseFileToPeople(filePath);
-            }
         }
     }
 }

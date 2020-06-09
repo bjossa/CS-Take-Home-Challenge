@@ -10,19 +10,27 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge
 {
-    // a class for parsing a text file of people data into List<Person>
+    // a class for parsing a text file of people data into ObservableCollection<Person>
+    // this class is part of the model in our MVVM pattern
     public class PersonFileParser
     {
-        public ObservableCollection<Person> People { get; set; } // will update the UI when it changes
+        public ObservableCollection<Person> people { get; set; }
+        private string filePath = "C:\\Users\\Work\\Desktop\\Data.txt";
 
         public PersonFileParser()
         {
-            People = new ObservableCollection<Person>();
+            people = new ObservableCollection<Person>();
+        }
+
+        public ObservableCollection<Person> GetAllPeople()
+        {
+            ParseFileToPeople();
+            return people;
         }
 
 
         // reads file data and populates 'people'
-        public void ParseFileToPeople(string filePath)
+        private void ParseFileToPeople()
         {
             string[] unparsedPeople = File.ReadAllLines(filePath);
             // go through each unparsedPerson and convert them to people instances
@@ -38,7 +46,7 @@ namespace CS_Take_Home_Challenge
             string[] properties = str.Split(new string[] { ", " }, StringSplitOptions.None); //{name, address, phone, isValid}
             properties = properties.Select(x => x.Trim()).ToArray();
             Person person = new Person(properties[0], properties[1], properties[2], bool.Parse(properties[3]));
-            People.Add(person);
+            people.Add(person);
         }
 
     }
