@@ -10,44 +10,58 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge
 {
-    // a class for parsing a text file of people data into ObservableCollection<Person>
-    // this class is part of the model in our MVVM pattern
     public class PersonFileParser
     {
-        public ObservableCollection<Person> people { get; set; }
-        private string filePath = "C:\\Users\\Work\\Desktop\\Data.txt";
 
+        #region private members
+        private string m_filePath;
+        #endregion
+
+        #region Constructors
         public PersonFileParser()
         {
-            people = new ObservableCollection<Person>();
+            People = new ObservableCollection<Person>();
+            m_filePath = "C:\\Users\\erico\\OneDrive\\Desktop\\Data.txt";
         }
+        #endregion
+
+        #region Properties
+        public ObservableCollection<Person> People { get; set; }
+        #endregion
+
+        #region public methods
 
         public ObservableCollection<Person> GetAllPeople()
         {
             ParseFileToPeople();
-            return people;
+            return People;
         }
+        #endregion
 
-
-        // reads file data and populates 'people'
+        #region private methods
         private void ParseFileToPeople()
         {
-            string[] unparsedPeople = File.ReadAllLines(filePath);
-            // go through each unparsedPerson and convert them to people instances
+            string[] unparsedPeople = File.ReadAllLines(m_filePath);
+
             foreach (var unparsedPerson in unparsedPeople)
             {
-                ConvertStringToPersonAndAddToPeople_(unparsedPerson);
+                ConvertStringToPersonAndAddToPeople(unparsedPerson);
             }
         }
 
-        // given a string of the form "name, address, phone, isValid", create an instance of a Person with these attributes and add it to 'people'
-        private void ConvertStringToPersonAndAddToPeople_(string str)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"> "name, address, phone, isValid" </param>
+        private void ConvertStringToPersonAndAddToPeople(string str)
         {
-            string[] properties = str.Split(new string[] { ", " }, StringSplitOptions.None); //{name, address, phone, isValid}
+            string[] properties = str.Split(new string[] { ", " }, StringSplitOptions.None);
             properties = properties.Select(x => x.Trim()).ToArray();
             Person person = new Person(properties[0], properties[1], properties[2], bool.Parse(properties[3]));
-            people.Add(person);
+            People.Add(person);
         }
+
+        #endregion
 
     }
 }

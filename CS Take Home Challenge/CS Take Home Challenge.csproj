@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Tests\PersonValueConverterTest.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,7 +73,7 @@
   <ItemGroup>
     <Compile Include="Person.cs" />
     <Compile Include="PersonFileParser.cs" />
-    <Compile Include="PersonFileParserViewModel.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="PersonValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

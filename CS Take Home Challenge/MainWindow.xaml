@@ -11,30 +11,35 @@
 		<local:PersonValueConverter x:Key="IsActiveToForegroundColourConv"/>
 	</Window.Resources>
 	<Window.DataContext>
-		<local:PersonFileParserViewModel/>
+		<local:MainWindowViewModel/>
 	</Window.DataContext>
 
 	<StackPanel Orientation="Vertical">
 		<Button Width="100" Height="100" Content="Show People" Command="{Binding ShowPeopleCommand}"/>
-		<Grid Height="30" Width="800">
+		
+        <Grid Height="30" Width="800">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<TextBlock Grid.Column="0" Width="100" Height="30" Text="Name" />
+			
+            <TextBlock Grid.Column="0" Width="100" Height="30" Text="Name" />
 			<TextBlock Grid.Column="1" Width="100" Height="30" Text="Address" />
 			<TextBlock Grid.Column="2" Width="100" Height="30" Text="Phone" />
 		</Grid>
 
+        <!-- Display People as a stackpanel -->
 		<ListBox ItemsSource="{Binding Path=People, Mode=OneWay}"
 				 Visibility="{Binding ArePeopleVisible, Mode=OneWay}">
-			<ListBox.ItemsPanel>
+			
+            <ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Vertical" HorizontalAlignment="Center"/>
 				</ItemsPanelTemplate>
 			</ListBox.ItemsPanel>
-			<ListBox.ItemTemplate>
+			
+            <ListBox.ItemTemplate>
 				<DataTemplate>
 					<Grid Width="800">
 						<Grid.ColumnDefinitions>
@@ -42,7 +47,8 @@
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
-						<TextBlock Width="100" Height="50" Grid.Column="0" Text="{Binding Path=Name}"
+						
+                        <TextBlock Width="100" Height="50" Grid.Column="0" Text="{Binding Path=Name}"
                                    Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
 						<TextBlock Width="100" Height="50" Grid.Column="1" Text="{Binding Path=Address}"
                                Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>

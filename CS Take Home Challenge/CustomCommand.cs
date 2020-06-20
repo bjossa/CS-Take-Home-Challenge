@@ -9,15 +9,21 @@ namespace CS_Take_Home_Challenge
 {
 	class CustomCommand : ICommand
 	{
-		private Action<object> execute;
-		private Predicate<object> canExecute;
-		public CustomCommand(Action<object> execute, Predicate<object> canExecute)
-		{
-			this.execute = execute;
-			this.canExecute = canExecute;
-		}
+        #region private members
+        private Action<object> m_execute;
+		private Predicate<object> m_canExecute;
+        #endregion
 
-		public event EventHandler CanExecuteChanged
+        #region constructors
+        public CustomCommand(Action<object> execute, Predicate<object> canExecute)
+		{
+			m_execute = execute;
+			m_canExecute = canExecute;
+		}
+        #endregion
+
+        #region Properties
+        public event EventHandler CanExecuteChanged
 		{
 			add
 			{
@@ -29,15 +35,22 @@ namespace CS_Take_Home_Challenge
 			}
 
 		}
+		#endregion
 
+		#region Public Methods
+		#region Interface Specific Implementations
+		#region Implementation of ICommand Interface
 		public bool CanExecute(object parameter)
 		{
-			return canExecute(parameter);
+			return m_canExecute(parameter);
 		}
 
 		public void Execute(object parameter)
 		{
-			execute(parameter);
+			m_execute(parameter);
 		}
-	}
+        #endregion
+        #endregion
+        #endregion
+    }
 }
