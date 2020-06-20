@@ -11,7 +11,7 @@
 		<local:PersonValueConverter x:Key="IsActiveToForegroundColourConv"/>
 	</Window.Resources>
 	<Window.DataContext>
-		<local:PersonFileParserViewModel/>
+		<local:MainWindowViewModel/>
 	</Window.DataContext>
 
 	<StackPanel Orientation="Vertical">

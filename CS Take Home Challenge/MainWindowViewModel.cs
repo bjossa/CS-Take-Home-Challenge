@@ -10,9 +10,7 @@ using System.Windows.Input;
 
 namespace CS_Take_Home_Challenge
 {
-	// stores the people, handles commands, loads people upon construction,
-	// also handles the visibility of the people
-	class PersonFileParserViewModel : INotifyPropertyChanged
+	class MainWindowViewModel : INotifyPropertyChanged, IMainWindowViewModel
 	{
 		public ObservableCollection<Person> People { get; set; }
 		private PersonFileParser fileParser = new PersonFileParser();
@@ -27,11 +25,11 @@ namespace CS_Take_Home_Challenge
 			}
 		}
 
-		private Visibility arePeopleVisible = Visibility.Hidden; // people start hidden
+		private Visibility arePeopleVisible = Visibility.Hidden;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public PersonFileParserViewModel()
+		public MainWindowViewModel()
 		{
 			loadData();
 			loadCommands();
@@ -42,7 +40,6 @@ namespace CS_Take_Home_Challenge
 			ShowPeopleCommand = new CustomCommand(showPeople, canShowPeople);
 		}
 
-		// can show people if they are not currently visible
 		private bool canShowPeople(object obj)
 		{
 			return ArePeopleVisible != Visibility.Visible;
