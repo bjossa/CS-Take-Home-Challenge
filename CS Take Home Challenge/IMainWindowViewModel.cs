@@ -9,6 +9,6 @@ namespace CS_Take_Home_Challenge
 {
     interface IMainWindowViewModel
     {
-        ObservableCollection<Person> People { get; set; }
+        ObservableCollection<IPersonViewModel> People { get; set; }
     }
 }

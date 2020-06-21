@@ -10,12 +10,12 @@ using System.Windows.Input;
 
 namespace CS_Take_Home_Challenge
 {
-	class MainWindowViewModel : INotifyPropertyChanged
+	class MainWindowViewModel : INotifyPropertyChanged //todo: should implement IMainWindowViewModel
 	{
 
 		#region Private Fields
 		private Visibility m_arePeopleVisible = Visibility.Hidden;
-		private PersonFileParser m_fileParser = new PersonFileParser();
+		private PersonFileParser m_fileParser = new PersonFileParser(); // todo: fix this dependancy
 		#endregion
 
 		#region Constructors
@@ -27,7 +27,6 @@ namespace CS_Take_Home_Challenge
 		#endregion
 
 		#region Properties
-		public ObservableCollection<Person> People { get; set; }
 		public Visibility ArePeopleVisible
 		{
 			get => m_arePeopleVisible;
@@ -45,13 +44,13 @@ namespace CS_Take_Home_Challenge
 
 		#region Commands
 		public ICommand ShowPeopleCommand { get; set; }
-		#endregion
+        #endregion
 
-		#region Public Methods
-		#endregion
+        #region Public Methods
+        #endregion
 
-		#region Private Methods
-		private void LoadCommands()
+        #region Private Methods
+        private void LoadCommands()
 		{
 			ShowPeopleCommand = new CustomCommand(showPeople, canShowPeople);
 		}
@@ -87,6 +86,10 @@ namespace CS_Take_Home_Challenge
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
-		#endregion
-	}
+		#region Implementation of IMainWindowViewModel
+		public ObservableCollection<Person> People { get; set; } // todo: should be a list of PersonViewModel
+        #endregion
+
+        #endregion
+    }
 }

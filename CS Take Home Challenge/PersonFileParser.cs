@@ -21,7 +21,7 @@ namespace CS_Take_Home_Challenge
         public PersonFileParser()
         {
             People = new ObservableCollection<Person>();
-            m_filePath = "C:\\Users\\erico\\OneDrive\\Desktop\\Data.txt";
+            m_filePath = "C:\\Users\\erico\\OneDrive\\Desktop\\Data2.txt";
         }
         #endregion
 

@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS Take Home Challenge", "CS Take Home Challenge\CS Take Home Challenge.csproj", "{4A4477C7-75F1-4E0D-82B3-C524DAC3945E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSTakeHomeChallenge", "CS Take Home Challenge\CSTakeHomeChallenge.csproj", "{4A4477C7-75F1-4E0D-82B3-C524DAC3945E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsTakeHomeChallengeTest", "CsTakeHomeChallengeTest\CsTakeHomeChallengeTest.csproj", "{B5A4749A-77E3-4B61-B63D-093F1C24125E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A4477C7-75F1-4E0D-82B3-C524DAC3945E} = {4A4477C7-75F1-4E0D-82B3-C524DAC3945E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{4A4477C7-75F1-4E0D-82B3-C524DAC3945E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A4477C7-75F1-4E0D-82B3-C524DAC3945E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A4477C7-75F1-4E0D-82B3-C524DAC3945E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A4749A-77E3-4B61-B63D-093F1C24125E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A4749A-77E3-4B61-B63D-093F1C24125E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A4749A-77E3-4B61-B63D-093F1C24125E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A4749A-77E3-4B61-B63D-093F1C24125E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
