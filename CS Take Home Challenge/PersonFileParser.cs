@@ -21,7 +21,6 @@ namespace CS_Take_Home_Challenge
         public PersonFileParser()
         {
             People = new ObservableCollection<Person>();
-            m_filePath = "C:\\Users\\erico\\OneDrive\\Desktop\\Data2.txt";
         }
         #endregion
 
@@ -31,17 +30,36 @@ namespace CS_Take_Home_Challenge
 
         #region public methods
 
-        public ObservableCollection<Person> GetAllPeople()
+        public ObservableCollection<Person> GetAllPeople(string filePath)
         {
-            ParseFileToPeople();
+            ParseFileToPeople(filePath);
             return People;
         }
         #endregion
 
         #region private methods
-        private void ParseFileToPeople()
+        private async Task ParseFileToPeopleAsync()
         {
-            string[] unparsedPeople = File.ReadAllLines(m_filePath);
+            using (var sr = new StreamReader(m_filePath))
+            {
+                List<Task<string>> unparsedPeopleTasks = new List<Task<string>>();
+                Task<string> lineTask;
+                while ((lineTask = sr.ReadLineAsync()) != null)
+                {
+                    unparsedPeopleTasks.Add(lineTask);
+                }
+                string[] unparsedPeople = await Task.WhenAll(unparsedPeopleTasks);
+                foreach (var unparsedPerson in unparsedPeople)
+                {
+                    ConvertStringToPersonAndAddToPeople(unparsedPerson); // todo: create a helper method that encapsulates rading the line and converting it to a Person object, then await on
+                    // a bunch of tasks that are linked to this newly created helper method.
+                }
+            }
+        }
+
+        private void ParseFileToPeople(string filePath)
+        {
+            string[] unparsedPeople = File.ReadAllLines(filePath);
 
             foreach (var unparsedPerson in unparsedPeople)
             {

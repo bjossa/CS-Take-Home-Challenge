@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_Take_Home_Challenge.Tests
+namespace CS_Take_Home_Challenge
 {
-    class PersonValueConverterTest
+    class PersonListViewModel: IPersonListViewModel
     {
     }
 }

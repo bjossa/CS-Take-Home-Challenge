@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="CustomCommand.cs" />
     <Compile Include="IMainWindowViewModel.cs" />
+    <Compile Include="IPersonListViewModel.cs" />
     <Compile Include="IPersonViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -72,9 +73,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messanger.cs" />
+    <Compile Include="People\IPersonViewModel.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonFileParser.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="PersonListViewModel.cs" />
     <Compile Include="PersonValueConverter.cs" />
     <Compile Include="PersonViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
