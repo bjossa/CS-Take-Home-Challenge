@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CsTakeHomeChallengeTest
+namespace CS_Take_Home_Challenge.fileParsing
 {
-    class PersonValueConverterTest
+    interface IPersonFileParser
     {
+        List<Person> LoadPeopleFromFile(string filePath);
     }
 }

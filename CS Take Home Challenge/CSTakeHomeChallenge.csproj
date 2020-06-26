@@ -63,24 +63,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\PersonValueConverter.cs" />
     <Compile Include="CustomCommand.cs" />
-    <Compile Include="IMainWindowViewModel.cs" />
-    <Compile Include="IPersonListViewModel.cs" />
-    <Compile Include="IPersonViewModel.cs" />
+    <Compile Include="Factory\IPersonFactory.cs" />
+    <Compile Include="Factory\PersonFactory.cs" />
+    <Compile Include="fileParsing\IPersonFileParser.cs" />
+    <Compile Include="fileParsing\PersonFileParser.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindow\MainWindowViewModel.cs" />
     <Compile Include="Messanger.cs" />
+    <Compile Include="People\IPersonListViewModel.cs" />
     <Compile Include="People\IPersonViewModel.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="PersonFileParser.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="PersonListViewModel.cs" />
-    <Compile Include="PersonValueConverter.cs" />
-    <Compile Include="PersonViewModel.cs" />
+    <Compile Include="People\Person.cs" />
+    <Compile Include="People\PersonListViewModel.cs" />
+    <Compile Include="People\PersonViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,5 +107,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

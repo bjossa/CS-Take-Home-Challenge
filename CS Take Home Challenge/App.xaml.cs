@@ -13,25 +13,22 @@ namespace CS_Take_Home_Challenge
     /// </summary>
     public partial class App : Application
     {
-        // project step goals:
-        // - when the app starts, create a button for displaying the people on a listView when the button is clicked (button at the top)
-        // - also, when the program starts, the data from the file needs to be loaded and stored somewhere that is accessible to the UI
-
-        //private void Application_Startup(object sender, StartupEventArgs e)
+        //protected override void OnStartup(StartupEventArgs e)
         //{
-        //    // Create the startup window
-        //    MainWindow wnd = new MainWindow();
-        //    // Do stuff here, e.g. to the window
-        //    wnd.Title = "People Displayer";
-        //    // Show the window
-        //    wnd.Show();
-
-        //    // now, start the model running
-        //    // parse the text file of people data, and print out the resulting list of people.
-        //    PersonFileParser fileParser = new PersonFileParser();
-        //    string filePath = "C:\\Users\\eric.raywood\\Desktop\\C# intro project\\Data.txt";
-        //    fileParser.ParseFileToPeople(filePath);
-        //    fileParser.people.ForEach(Console.WriteLine);
+        //    base.OnStartup(e); MainWindow window = new MainWindow();
+        //    // Create the ViewModel to which 
+        //    // the main window binds. 
+        //    string path = "Data/customers.xml";
+        //    var viewModel = new MainWindowViewModel(path);
+        //    // When the ViewModel asks to be closed, 
+        //    // close the window. 
+        //    viewModel.RequestClose += delegate { window.Close(); };
+        //    // Allow all controls in the window to 
+        //    // bind to the ViewModel by setting the 
+        //    // DataContext, which propagates down 
+        //    // the element tree. 
+        //    window.DataContext = viewModel;
+        //    window.Show();
         //}
     }
 }

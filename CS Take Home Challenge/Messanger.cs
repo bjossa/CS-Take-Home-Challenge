@@ -43,13 +43,13 @@ namespace CS_Take_Home_Challenge
         #region Public Methods
         public void Register<T> (object recipient, Action<T> action)
         {
-            Register(recipient, action, null);
+            //Register(recipient, action, null);
 
         }
 
         public void Send<T> (T message)
         {
-            Send(message, null);
+            //Send(message, null);
         }
         #endregion
 

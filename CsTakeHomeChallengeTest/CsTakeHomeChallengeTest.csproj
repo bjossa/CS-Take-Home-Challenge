@@ -54,7 +54,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PersonValueConverterTests.cs" />
+    <Compile Include="Converters\PersonValueConverterTests.cs" />
+    <Compile Include="fileParsing\PersonFileParserTests.cs" />
+    <Compile Include="mainWindow\MainWindowViewModelTests.cs" />
+    <Compile Include="People\PersonListViewModelTests.cs" />
+    <Compile Include="People\PersonTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

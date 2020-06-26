@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge
 {
-    interface IPersonViewModel: INotifyPropertyChanged
+    interface IPersonViewModel : INotifyPropertyChanged
     {
         string Name { get; set; }
         string Address { get; set; }
