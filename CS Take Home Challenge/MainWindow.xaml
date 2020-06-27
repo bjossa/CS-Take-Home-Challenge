@@ -12,13 +12,12 @@
     </Window.Resources>
 
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="{Binding HaveFinishedAsync}" Width="100"/>
         <StackPanel Orientation="Horizontal">
             <TextBox x:Name="FilePathInputTextBox" Width="300" Height="100" Text="Enter filePath here"/>
             <Button Content="Submit" Width="300" Height="100" Command="{Binding InputFilePathCommand}" CommandParameter="{Binding ElementName=FilePathInputTextBox, Path=Text}"/>
         </StackPanel>
-        <Button Width="100" Height="100" Content="Show People" Command="{Binding ShowPeopleCommand}"/>
-		
+        <Button x:Name="ShowPeopleButton" Width="100" Height="100" Content="Show People" Command="{Binding ShowPeopleCommand}"/>
+
         <Grid Height="30" Width="800">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
@@ -34,7 +33,7 @@
         <!-- Display People as a stackpanel -->
 		<ListBox ItemsSource="{Binding Path=People, Mode=OneWay}"
 				 Visibility="{Binding ArePeopleVisible, Mode=OneWay}"
-                 Name="PeopleListBox">
+                 x:Name="PeopleListBox">
 			
             <ListBox.ItemsPanel>
 				<ItemsPanelTemplate>

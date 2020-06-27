@@ -65,6 +65,7 @@ namespace CS_Take_Home_Challenge
 		// the input file command will trigger an async load of the people, which is a call to the personFileParser, and then it will take those people, and it will pass them to the personFactory, and then pass the results to the PersonListVM
         private async void LoadPeopleAsync(string filePath)
         {
+			// todo: validate the filePath before passing to external resource.
 			List<Person> people = await Task.Run(() => m_parser.LoadPeopleFromFile(filePath));
 			ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
 			m_personListVM.populatePeople(peopleVMs);

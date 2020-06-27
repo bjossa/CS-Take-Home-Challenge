@@ -91,9 +91,10 @@ namespace CS_Take_Home_Challenge
 
         }
 
+        // todo: implement this properly
         public void populatePeople(ObservableCollection<IPersonViewModel> peopleVMs)
         {
-
+            People = peopleVMs;
         }
 
         #endregion
