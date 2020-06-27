@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge.Factory
 {
-    interface IPersonFactory
+    public interface IPersonFactory
     {
         ObservableCollection<IPersonViewModel> CreatePeopleViewModels(ICollection<Person> people);
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge.fileParsing
 {
-    interface IPersonFileParser
+    public interface IPersonFileParser
     {
         List<Person> LoadPeopleFromFile(string filePath);
     }

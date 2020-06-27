@@ -11,7 +11,7 @@ namespace CS_Take_Home_Challenge.Factory
     {
         public ObservableCollection<IPersonViewModel> CreatePeopleViewModels(ICollection<Person> people)
         {
-            ObservableCollection<PersonViewModel> peopleVMs = new ObservableCollection<PersonViewModel>();
+            ObservableCollection<IPersonViewModel> peopleVMs = new ObservableCollection<IPersonViewModel>();
             foreach (var person in people)
             {
                 peopleVMs.Add(new PersonViewModel(person));

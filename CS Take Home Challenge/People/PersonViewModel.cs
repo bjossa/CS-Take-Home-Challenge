@@ -8,7 +8,7 @@ using System.Windows.Navigation;
 
 namespace CS_Take_Home_Challenge
 {
-    class PersonViewModel : IPersonViewModel
+    public class PersonViewModel : IPersonViewModel
     {
 
         #region Private Fields

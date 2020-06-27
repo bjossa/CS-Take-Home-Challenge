@@ -20,9 +20,16 @@ namespace CS_Take_Home_Challenge
     /// </summary>
     public partial class MainWindow : Window
     {
+        public IPersonListViewModel m_PersonListViewModel;
+        public MainWindowViewModel m_mainWindowViewModel;
 
         public MainWindow()
         {
+            m_PersonListViewModel = new PersonListViewModel();
+            m_mainWindowViewModel = new MainWindowViewModel(m_PersonListViewModel);
+            this.DataContext = m_mainWindowViewModel;
+            PeopleListBox.DataContext = m_PersonListViewModel;
+
             InitializeComponent();
         }
     }

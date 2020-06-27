@@ -17,7 +17,7 @@ using System.IO.Packaging;
 
 namespace CS_Take_Home_Challenge
 {
-	class MainWindowViewModel : INotifyPropertyChanged
+	public class MainWindowViewModel : INotifyPropertyChanged
 	{
 
 		#region Private Fields
@@ -66,17 +66,8 @@ namespace CS_Take_Home_Challenge
         private async void LoadPeopleAsync(string filePath)
         {
 			List<Person> people = await Task.Run(() => m_parser.LoadPeopleFromFile(filePath));
-			ObservableCollection < IPersonViewModel >  peopleVMs= m_factory.CreatePeopleViewModels(people);
+			ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
 			m_personListVM.populatePeople(peopleVMs);
-		}
-
-
-        private void RaisePropertyChanged(string propertyName)
-		{
-			if (propertyName != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 
 		#endregion
