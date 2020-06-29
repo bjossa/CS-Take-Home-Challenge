@@ -27,7 +27,7 @@ namespace CS_Take_Home_Challenge
 		#endregion
 
 		#region Constructors
-		public MainWindowViewModel(IPersonListViewModel personListVM = null, PersonFileParser parser = null, PersonFactory factory = null)
+		public MainWindowViewModel(IPersonListViewModel personListVM = null, IPersonFileParser parser = null, IPersonFactory factory = null)
 		{
 			m_personListVM = personListVM ?? new PersonListViewModel();
 			m_parser = parser ?? new PersonFileParser();
@@ -48,27 +48,26 @@ namespace CS_Take_Home_Challenge
 		#endregion
 
 		#region Public Methods
+		public void InputFileFromPath(object filePathO)
+		{
+			string filePath = filePathO as string;
+			LoadPeopleAsync(filePath);
+		}
+
+
+		public async void LoadPeopleAsync(string filePath)
+		{
+			// todo: validate the filePath before passing to external resource (maybe)
+			List<Person> people = await Task.Run(() => { return m_parser.LoadPeopleFromFile(filePath); });
+			ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
+			m_personListVM.populatePeople(peopleVMs);
+		}
 		#endregion
 
 		#region Private Methods
 		private void LoadCommands()
 		{
 			InputFilePathCommand = new CustomCommand(InputFileFromPath, (o) => { return true; });
-		}
-
-        public void InputFileFromPath(object filePathO)
-		{
-			string filePath = filePathO as string;
-			LoadPeopleAsync(filePath);
-        }
-
-
-        public async void LoadPeopleAsync(string filePath)
-        {
-			// todo: validate the filePath before passing to external resource (maybe)
-			List<Person> people = await Task.Run(() => { return m_parser.LoadPeopleFromFile(filePath);});
-			ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
-			m_personListVM.populatePeople(peopleVMs);
 		}
 
 		#endregion

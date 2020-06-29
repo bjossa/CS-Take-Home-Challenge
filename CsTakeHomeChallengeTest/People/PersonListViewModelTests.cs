@@ -12,6 +12,7 @@ using System.Windows;
 
 namespace CsTakeHomeChallengeTest.People
 {
+    [TestFixture]
     class PersonListViewModelTests
     {
         private string k_personName = "name";
@@ -20,25 +21,26 @@ namespace CsTakeHomeChallengeTest.People
         private string k_personName2 = "name2";
         private string k_personAddress2 = "address2";
         private string k_personPhone2 = "phone2";
-        private Mock<PersonViewModel> m_mockPersonVM;
+        private Mock<IPersonViewModel> m_mockPersonVM;
 
         [SetUp]
         public void SetUp()
         {
-            m_mockPersonVM = new Mock<PersonViewModel>();
+            m_mockPersonVM = new Mock<IPersonViewModel>();
             m_mockPersonVM.SetupGet(mock => mock.Name).Returns(k_personName);
             m_mockPersonVM.SetupGet(mock => mock.Address).Returns(k_personAddress);
             m_mockPersonVM.SetupGet(mock => mock.Phone).Returns(k_personPhone);
             m_mockPersonVM.SetupGet(mock => mock.IsActive).Returns(true);
         }
 
+        [Test]
         public void Constructor_Test()
         {
             var systemUnderTest = new PersonListViewModel();
             Assert.IsNotNull(systemUnderTest.People);
         }
 
-
+        [Test]
         public void ArePeopleVisibleTest()
         {
             var systemUnderTest = new PersonListViewModel();
@@ -46,6 +48,7 @@ namespace CsTakeHomeChallengeTest.People
             Assert.AreEqual(systemUnderTest.ArePeopleVisible, Visibility.Visible);
         }
 
+        [Test]
         public void CanShowPeopleTrue()
         {
             //Arrange
@@ -60,6 +63,7 @@ namespace CsTakeHomeChallengeTest.People
             Assert.IsTrue(result);
         }
 
+        [Test]
         public void CanShowPeopleNoPersonReturnsFalse()
         {
             //Arrange
@@ -73,6 +77,7 @@ namespace CsTakeHomeChallengeTest.People
             Assert.IsFalse(result);
         }
 
+        [Test]
         public void CanShowPeopleAlreadyVisibleReturnsFalse()
         {
             //Arrange
@@ -87,6 +92,7 @@ namespace CsTakeHomeChallengeTest.People
             Assert.IsFalse(result);
         }
 
+        [Test]
         public void CanShowPeopleNoPeopleAndAlreadyVisibleReturnsFalse()
         {
             //Arrange
@@ -100,6 +106,7 @@ namespace CsTakeHomeChallengeTest.People
             Assert.IsFalse(result);
         }
 
+        [Test]
         public void AddPersonViewModelTest()
         {
             // Arrange
@@ -112,6 +119,7 @@ namespace CsTakeHomeChallengeTest.People
             Assert.IsTrue(systemUnderTest.People.Contains(m_mockPersonVM.Object));
         }
 
+        [Test]
         public void RemovePersonViewModelValidTest()
         {
             // Arrange
@@ -125,6 +133,7 @@ namespace CsTakeHomeChallengeTest.People
             Assert.IsFalse(systemUnderTest.People.Contains(m_mockPersonVM.Object));
         }
 
+        [Test]
         public void populatePeopleTest()
         {
             //Arrange
@@ -132,7 +141,7 @@ namespace CsTakeHomeChallengeTest.People
             systemUnderTest.AddPersonViewModel(m_mockPersonVM.Object);
 
             // create another personViewModel
-            var mockPersonVM2 = new Mock<PersonViewModel>();
+            var mockPersonVM2 = new Mock<IPersonViewModel>();
             mockPersonVM2.SetupGet(mock => mock.Name).Returns(k_personName2);
             mockPersonVM2.SetupGet(mock => mock.Address).Returns(k_personAddress2);
             mockPersonVM2.SetupGet(mock => mock.Phone).Returns(k_personPhone2);

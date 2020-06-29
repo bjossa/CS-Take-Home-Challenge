@@ -47,14 +47,6 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region Public Methods
-        #endregion
-
-        #region Private Methods
-
-        private void LoadCommands_()
-        {
-            ShowPeopleCommand = new CustomCommand(ShowPeople, CanShowPeople);
-        }
         public bool CanShowPeople(object obj)
         {
             bool arePeopleVisible = ArePeopleVisible == Visibility.Visible;
@@ -67,12 +59,20 @@ namespace CS_Take_Home_Challenge
         {
             ArePeopleVisible = Visibility.Visible;
         }
+        #endregion
+
+        #region Private Methods
+
+        private void LoadCommands_()
+        {
+            ShowPeopleCommand = new CustomCommand(ShowPeople, CanShowPeople);
+        }
 
         private void RaisePropertyChanged_(string propertyName)
         {
             if (propertyName != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
         #endregion
@@ -84,18 +84,25 @@ namespace CS_Take_Home_Challenge
         public ObservableCollection<IPersonViewModel> People { get; set; }
         public void AddPersonViewModel(IPersonViewModel personVM)
         {
-
+            People.Add(personVM);
         }
         // todo: what happens when this person isn't present?
         public void RemovePersonViewModel(IPersonViewModel personVM)
         {
-
+            if (People.Contains(personVM))
+            {
+                People.Remove(personVM);
+            }
         }
 
-        // todo: implement this properly
+        // todo: should this change the visibility of the people?
         public void populatePeople(ObservableCollection<IPersonViewModel> peopleVMs)
         {
-            People = peopleVMs;
+            People.Clear(); //todo: does this work, and should we be calling RemovePersonViewModel?
+            foreach (var personViewModel in peopleVMs)
+            {
+                AddPersonViewModel(personViewModel);
+            }
         }
 
         #endregion

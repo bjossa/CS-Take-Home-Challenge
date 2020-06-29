@@ -7,19 +7,31 @@ using CS_Take_Home_Challenge;
 using NUnit.Framework;
 using Moq;
 
-namespace CsTakeHomeChallengeTest
+namespace CsTakeHomeChallengeTest.fileParsing
 {
     [TestFixture]
     class PersonFileParserTests
     {
+        private const string k_personString1 = "Gene,   679 Thurlow St,  7782396673, true";
+        private const string k_personString2 = "Frond,  123 Main St,     6042391234, false";
+        private const string k_personName = "Gene";
+        private const string k_personAddress = "679 Thurlow St";
+        private const string k_personPhone = "7782396673";
+        private const bool k_personIsActive = true;
+        private const string k_filePath = "nonSenseString";
+        private const string k_personStringInvalidNoBool = "Gene,   679 Thurlow St,  7782396673, randomString";
+        private const string k_personStringInvalidMissingComma = "Gene,   679 Thurlow St,  7782396673 true";
+
+
+        [Test]
         public void LoadPeopleFromFile_ValidFileData_OutputsListOfPeople()
         {
             //Arrange
 
             string[] unparsedPeople =
                 {
-                "Gene,   679 Thurlow St,  7782396673, true",
-                "Frond,  123 Main St,     6042391234, false"
+                k_personString1,
+                k_personString2,
                 };
             var systemUnderTest = new PersonFileParser();
 
@@ -30,23 +42,24 @@ namespace CsTakeHomeChallengeTest
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Count, 2);
             Person person1 = result[0];
-            Assert.AreEqual(person1.Name, "Gene");
-            Assert.AreEqual(person1.Address, "679 Thurlow St");
-            Assert.AreEqual(person1.Phone, "7782396673");
-            Assert.AreEqual(person1.IsActive, true);
+            Assert.AreEqual(person1.Name, k_personName);
+            Assert.AreEqual(person1.Address, k_personAddress);
+            Assert.AreEqual(person1.Phone, k_personPhone);
+            Assert.AreEqual(person1.IsActive, k_personIsActive);
 
         }
 
+        [Test]
         public void LoadPeopleFromFile_inValidFileData_ThrowsException()
         {
             //Arrange
-            string filePath = "nonSenseString";
             var systemUnderTest = new PersonFileParser();
 
             //Act/Assert
-            Assert.Throws(typeof(Exception), () => { systemUnderTest.LoadPeopleFromFile(filePath, null); });
+            Assert.Throws(typeof(Exception), () => { systemUnderTest.LoadPeopleFromFile(k_filePath, null); });
 
         }
+        [Test]
         public void LoadPeopleFromFile_inValidArguments_ThrowsException()
         {
             //Arrange
@@ -56,34 +69,31 @@ namespace CsTakeHomeChallengeTest
             Assert.Throws(typeof(Exception), () => { systemUnderTest.LoadPeopleFromFile(null, null); });
         }
 
+        [Test]
         public void ToPersonValidTest()
         {
             //Arrange
-            string personString = "Gene,   679 Thurlow St,  7782396673, true";
             var systemUnderTest = new PersonFileParser();
 
             //Act
-            Person result = systemUnderTest.ToPerson(personString);
+            Person result = systemUnderTest.ToPerson(k_personString1);
 
             //Assert
-            Assert.AreEqual(result.Name, "Gene");
-            Assert.AreEqual(result.Address, "679 Thurlow St");
-            Assert.AreEqual(result.Phone, "7782396673");
-            Assert.AreEqual(result.IsActive, true);
-
+            Assert.AreEqual(result.Name, k_personName);
+            Assert.AreEqual(result.Address, k_personAddress);
+            Assert.AreEqual(result.Phone, k_personPhone);
+            Assert.AreEqual(result.IsActive, k_personIsActive);
         }
 
+        [Test]
         public void ToPersonInvalidShouldThrowException()
         {
             //Arrange
-            string personString1 = "Gene,   679 Thurlow St,  7782396673 true";
-            string personString2 = "Gene,   679 Thurlow St,  7782396673, randomString";
             var systemUnderTest = new PersonFileParser();
 
             //Act/Assert
-            Assert.Throws(typeof(Exception), () => { systemUnderTest.ToPerson(personString1); });
-            Assert.Throws(typeof(Exception), () => { systemUnderTest.ToPerson(personString2); });
-
+            Assert.Throws(typeof(Exception), () => { systemUnderTest.ToPerson(k_personStringInvalidMissingComma); });
+            Assert.Throws(typeof(Exception), () => { systemUnderTest.ToPerson(k_personStringInvalidNoBool); });
         }
     }
 }

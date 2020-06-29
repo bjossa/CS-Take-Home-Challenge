@@ -40,50 +40,50 @@ namespace CS_Take_Home_Challenge
         #region Specific Interface Implementation
 
         #region Implementation of <IPersonViewModel>
-        public string Name
+        public virtual string Name
         {
             get { return m_person.Name; }
             set 
             { 
                 m_person.Name = value;
-                RaisePropertyChanged("Name");
+                RaisePropertyChanged_("Name");
             }
         }
-        public string Address 
+        public virtual string Address 
         {
             get { return m_person.Address; }
             set
             {
                 m_person.Address = value;
-                RaisePropertyChanged("Address");
+                RaisePropertyChanged_("Address");
             }
         }
-        public string Phone 
+        public virtual string Phone 
         {
             get { return m_person.Phone; }
             set
             {
                 m_person.Phone = value;
-                RaisePropertyChanged("Phone");
+                RaisePropertyChanged_("Phone");
             }
         }
-        public bool IsActive 
+        public virtual bool IsActive 
         {
             get { return m_person.IsActive; }
             set
             {
                 m_person.IsActive = value;
-                RaisePropertyChanged("IsActive");
+                RaisePropertyChanged_("IsActive");
             }
         }
         #endregion
 
         #region Implementation of <INotifyPropertyChanged>
-        private void RaisePropertyChanged(string propertyName)
+        private void RaisePropertyChanged_(string propertyName)
         {
             if (propertyName != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
         #endregion

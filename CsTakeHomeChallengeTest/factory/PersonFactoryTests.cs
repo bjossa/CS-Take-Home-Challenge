@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace CsTakeHomeChallengeTest.factory
 {
+    [TestFixture]
     class PersonFactoryTests
     {
         private string k_personName = "name";
@@ -29,6 +30,7 @@ namespace CsTakeHomeChallengeTest.factory
             m_mockPerson.SetupGet(mock => mock.IsActive).Returns(k_personIsActive);
         }
 
+        [Test]
         public void CreatePeopleViewModelsTest()
         {
             //Arrange
