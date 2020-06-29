@@ -8,6 +8,6 @@ namespace CS_Take_Home_Challenge.fileParsing
 {
     public interface IPersonFileParser
     {
-        List<Person> LoadPeopleFromFile(string filePath);
+        List<Person> LoadPeopleFromFile(string filePath = null, string[] p_unparsedPeople = null);
     }
 }

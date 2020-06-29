@@ -28,14 +28,18 @@ namespace CS_Take_Home_Challenge
 
         #region public methods
 
-        public List<Person> LoadPeopleFromFile(string filePath)
+        public List<Person> LoadPeopleFromFile(string filePath = null, string[] p_unparsedPeople = null)
         {
+            if (filePath == null && p_unparsedPeople == null)
+            {
+                throw new Exception("invalid arguments to LoadPeopleFromFile");
+            }
             List<Person> people = new List<Person>();
-            string[] unparsedPeople = File.ReadAllLines(filePath);
+            string[] unparsedPeople = p_unparsedPeople ?? File.ReadAllLines(filePath);
 
             foreach (var unparsedPerson in unparsedPeople)
             {
-                people.Add(ConvertStringToPersonAndAddToPeople(unparsedPerson));
+                people.Add(ToPerson(unparsedPerson));
             }
             return people;
         }
@@ -65,7 +69,7 @@ namespace CS_Take_Home_Challenge
         /// 
         /// </summary>
         /// <param name="str"> "name, address, phone, isValid" </param>
-        private Person ConvertStringToPersonAndAddToPeople(string str)
+        public Person ToPerson(string str)
         {
             string[] properties = str.Split(new string[] { ", " }, StringSplitOptions.None);
             properties = properties.Select(x => x.Trim()).ToArray();

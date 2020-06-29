@@ -11,7 +11,7 @@ using System.Windows.Input;
 namespace CS_Take_Home_Challenge
 {
     //todo: should this class be an observable collection itself?
-    class PersonListViewModel : IPersonListViewModel
+    public class PersonListViewModel : IPersonListViewModel
     {
         #region Private Fields
         private Visibility m_arePeopleVisible = Visibility.Hidden;
@@ -32,7 +32,7 @@ namespace CS_Take_Home_Challenge
             set
             {
                 m_arePeopleVisible = value;
-                RaisePropertyChanged_("ArePeopleVisible");
+                RaisePropertyChanged_("ArePeopleVisible"); //todo: test that this was raised? (subscribe in test class?)
             }
         }
 
@@ -53,17 +53,17 @@ namespace CS_Take_Home_Challenge
 
         private void LoadCommands_()
         {
-            ShowPeopleCommand = new CustomCommand(ShowPeople_, CanShowPeople_);
+            ShowPeopleCommand = new CustomCommand(ShowPeople, CanShowPeople);
         }
-        private bool CanShowPeople_(object obj)
+        public bool CanShowPeople(object obj)
         {
             bool arePeopleVisible = ArePeopleVisible == Visibility.Visible;
-            bool haveLoadedPeople = People != null;
+            bool havePeople = People.Count > 0;
 
-            return !arePeopleVisible && haveLoadedPeople;
+            return !arePeopleVisible && havePeople;
         }
 
-        private void ShowPeople_(object obj)
+        public void ShowPeople(object obj)
         {
             ArePeopleVisible = Visibility.Visible;
         }
@@ -86,6 +86,7 @@ namespace CS_Take_Home_Challenge
         {
 
         }
+        // todo: what happens when this person isn't present?
         public void RemovePersonViewModel(IPersonViewModel personVM)
         {
 

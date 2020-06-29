@@ -53,20 +53,20 @@ namespace CS_Take_Home_Challenge
 		#region Private Methods
 		private void LoadCommands()
 		{
-			InputFilePathCommand = new CustomCommand(inputFileCommand, (o) => { return true; });
+			InputFilePathCommand = new CustomCommand(InputFileFromPath, (o) => { return true; });
 		}
 
-        private void inputFileCommand(object filePathO)
+        public void InputFileFromPath(object filePathO)
 		{
 			string filePath = filePathO as string;
 			LoadPeopleAsync(filePath);
         }
 
-		// the input file command will trigger an async load of the people, which is a call to the personFileParser, and then it will take those people, and it will pass them to the personFactory, and then pass the results to the PersonListVM
-        private async void LoadPeopleAsync(string filePath)
+
+        public async void LoadPeopleAsync(string filePath)
         {
-			// todo: validate the filePath before passing to external resource.
-			List<Person> people = await Task.Run(() => m_parser.LoadPeopleFromFile(filePath));
+			// todo: validate the filePath before passing to external resource (maybe)
+			List<Person> people = await Task.Run(() => { return m_parser.LoadPeopleFromFile(filePath);});
 			ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
 			m_personListVM.populatePeople(peopleVMs);
 		}
