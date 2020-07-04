@@ -56,7 +56,7 @@ namespace CsTakeHomeChallengeTest.fileParsing
             var systemUnderTest = new PersonFileParser();
 
             //Act/Assert
-            Assert.Throws(typeof(Exception), () => { systemUnderTest.LoadPeopleFromFile(k_filePath, null); });
+            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.LoadPeopleFromFile(k_filePath, null); });
 
         }
         [Test]
@@ -66,7 +66,7 @@ namespace CsTakeHomeChallengeTest.fileParsing
             var systemUnderTest = new PersonFileParser();
 
             //Act/Assert
-            Assert.Throws(typeof(Exception), () => { systemUnderTest.LoadPeopleFromFile(null, null); });
+            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.LoadPeopleFromFile(null, null); });
         }
 
         [Test]
@@ -92,8 +92,8 @@ namespace CsTakeHomeChallengeTest.fileParsing
             var systemUnderTest = new PersonFileParser();
 
             //Act/Assert
-            Assert.Throws(typeof(Exception), () => { systemUnderTest.ToPerson(k_personStringInvalidMissingComma); });
-            Assert.Throws(typeof(Exception), () => { systemUnderTest.ToPerson(k_personStringInvalidNoBool); });
+            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.ToPerson(k_personStringInvalidMissingComma); });
+            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.ToPerson(k_personStringInvalidNoBool); });
         }
     }
 }

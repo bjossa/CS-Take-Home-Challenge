@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge
 {
-    class ErrorLoadingPeopleException: Exception
+    public class ErrorLoadingPeopleException: Exception
     {
+        public ErrorLoadingPeopleException(string message): base(message)
+        {
+
+        }
+
+        public ErrorLoadingPeopleException() : base()
+        {
+
+        }
     }
 }

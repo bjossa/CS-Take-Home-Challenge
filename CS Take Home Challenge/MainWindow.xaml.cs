@@ -28,7 +28,7 @@ namespace CS_Take_Home_Challenge
             IPersonListViewModel m_PersonListViewModel = new PersonListViewModel();
             MainWindowViewModel m_mainWindowViewModel = new MainWindowViewModel(m_PersonListViewModel);
             DataContext = m_mainWindowViewModel;
-            PeopleListBox.DataContext = m_PersonListViewModel;
+            PeopleListView.DataContext = m_PersonListViewModel;
             ShowPeopleButton.DataContext = m_PersonListViewModel; ;
 
         }

@@ -33,7 +33,7 @@ namespace CS_Take_Home_Challenge
         {
             if (filePath == null && p_unparsedPeople == null)
             {
-                throw new Exception("invalid arguments to LoadPeopleFromFile");
+                throw new ErrorLoadingPeopleException("invalid arguments to LoadPeopleFromFile");
             }
             List<Person> people = new List<Person>();
             string[] unparsedPeople;
@@ -43,7 +43,7 @@ namespace CS_Take_Home_Challenge
             }
             catch (FileNotFoundException)
             {
-                throw new ErrorLoadingPeopleException();
+                throw new ErrorLoadingPeopleException("invalid file path provided");
             }
 
             foreach (var unparsedPerson in unparsedPeople)
