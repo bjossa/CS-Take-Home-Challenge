@@ -82,6 +82,7 @@ namespace CS_Take_Home_Challenge
         #region Implementation of <IPersonListViewModel>
 
         public ObservableCollection<IPersonViewModel> People { get; set; }
+
         public void AddPersonViewModel(IPersonViewModel personVM)
         {
             People.Add(personVM);

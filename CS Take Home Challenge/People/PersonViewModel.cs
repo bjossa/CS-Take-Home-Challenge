@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 
 namespace CS_Take_Home_Challenge
 {
@@ -19,10 +14,13 @@ namespace CS_Take_Home_Challenge
         public PersonViewModel(Person person)
         {
             m_person = person;
+            LoadCommands_();
+            IsReadOnly = true;
         }
         #endregion
 
         #region Properties
+
         #endregion
 
         #region Dependency Properties
@@ -32,9 +30,17 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region Public Methods
+        public void ChangePersonEditability(object o)
+        {
+            IsReadOnly = !IsReadOnly;
+        }
         #endregion
 
         #region Private Methods
+        private void LoadCommands_()
+        {
+            ChangePersonEditabilityCommand = new CustomCommand(ChangePersonEditability, (o) => { return true; });
+        }
         #endregion
 
         #region Specific Interface Implementation
@@ -76,6 +82,22 @@ namespace CS_Take_Home_Challenge
                 RaisePropertyChanged_("IsActive");
             }
         }
+
+        private bool m_isReadOnly;
+        public virtual bool IsReadOnly
+        {
+            get
+            {
+                return m_isReadOnly;
+            }
+            set
+            {
+                m_isReadOnly = value;
+                RaisePropertyChanged_("IsReadOnly");
+            }
+        }
+
+        public ICommand ChangePersonEditabilityCommand { get; set; }
         #endregion
 
         #region Implementation of <INotifyPropertyChanged>

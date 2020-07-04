@@ -58,9 +58,17 @@ namespace CS_Take_Home_Challenge
 		public async void LoadPeopleAsync(string filePath)
 		{
 			// todo: validate the filePath before passing to external resource (maybe)
-			List<Person> people = await Task.Run(() => { return m_parser.LoadPeopleFromFile(filePath); });
-			ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
-			m_personListVM.populatePeople(peopleVMs);
+			try
+            {
+				List<Person> people = await Task.Run(() => { return m_parser.LoadPeopleFromFile(filePath); }); //todo: figure out how to handle exceptions with your async code
+				ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
+				m_personListVM.populatePeople(peopleVMs);
+			}
+			catch (ErrorLoadingPeopleException)
+            {
+				//todo: display some error message to the UI
+            }
+			
 		}
 		#endregion
 

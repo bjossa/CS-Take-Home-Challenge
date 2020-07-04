@@ -1,5 +1,6 @@
 ﻿using CS_Take_Home_Challenge.fileParsing;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -35,7 +36,15 @@ namespace CS_Take_Home_Challenge
                 throw new Exception("invalid arguments to LoadPeopleFromFile");
             }
             List<Person> people = new List<Person>();
-            string[] unparsedPeople = p_unparsedPeople ?? File.ReadAllLines(filePath);
+            string[] unparsedPeople;
+            try
+            {
+                unparsedPeople = p_unparsedPeople ?? File.ReadAllLines(filePath);
+            }
+            catch (FileNotFoundException)
+            {
+                throw new ErrorLoadingPeopleException();
+            }
 
             foreach (var unparsedPerson in unparsedPeople)
             {

@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Converters\PersonValueConverter.cs" />
     <Compile Include="CustomCommand.cs" />
+    <Compile Include="ErrorLoadingPeopleException.cs" />
     <Compile Include="Factory\IPersonFactory.cs" />
     <Compile Include="Factory\PersonFactory.cs" />
     <Compile Include="fileParsing\IPersonFileParser.cs" />
