@@ -30,6 +30,7 @@ namespace CS_Take_Home_Challenge
             DataContext = m_mainWindowViewModel;
             PeopleListView.DataContext = m_PersonListViewModel;
             ShowPeopleButton.DataContext = m_PersonListViewModel; ;
+            EditPeopleStackPanel.DataContext = m_PersonListViewModel;
 
         }
     }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace CS_Take_Home_Challenge
 {
@@ -14,7 +15,8 @@ namespace CS_Take_Home_Challenge
     public class PersonListViewModel : IPersonListViewModel
     {
         #region Private Fields
-        private Visibility m_arePeopleVisible = Visibility.Hidden;
+        private Visibility m_peopleVisibility = Visibility.Hidden;
+        private IPersonViewModel m_selectedPerson;
         #endregion
 
         #region Constructors
@@ -26,13 +28,22 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region Properties
-        public Visibility ArePeopleVisible
+        public IPersonViewModel SelectedPerson
         {
-            get => m_arePeopleVisible;
+            get => m_selectedPerson;
             set
             {
-                m_arePeopleVisible = value;
-                RaisePropertyChanged_("ArePeopleVisible"); //todo: test that this was raised? (subscribe in test class?)
+                m_selectedPerson = value;
+                RaisePropertyChanged_("SelectedPerson");
+            }
+        }
+        public Visibility PeopleVisibility
+        {
+            get => m_peopleVisibility;
+            set
+            {
+                m_peopleVisibility = value;
+                RaisePropertyChanged_("PeopleVisibility"); //todo: test that this was raised? (subscribe in test class?)
             }
         }
 
@@ -44,20 +55,45 @@ namespace CS_Take_Home_Challenge
 
         #region Commands
         public ICommand ShowPeopleCommand { get; set; }
+        public ICommand DisplayAddPersonDialogueCommand { get; set; }
+        public ICommand DisplayEditPersonDialogueCommand { get; set; }
+        public ICommand RemovePersonCommand { get; set; }
         #endregion
+
+        public void DisplayAddPersonDialogue(object o)
+        {
+            //stub
+        }
+
+        public void DisplayEditPersonDialogue(object o)
+        {
+            //stub
+        }
+
+        public void RemovePerson(object o)
+        {
+            RemovePersonViewModel(SelectedPerson);
+        }
+
+        public bool CanDisplayEditPersonDialogue(object o)
+        {
+            return SelectedPerson != null && SelectedPerson.IsActive == true;
+        }
+
+        public bool CanRemovePerson(object o)
+        {
+            return SelectedPerson != null;
+        }
 
         #region Public Methods
         public bool CanShowPeople(object obj)
         {
-            bool arePeopleVisible = ArePeopleVisible == Visibility.Visible;
-            bool havePeople = People.Count > 0;
-
-            return !arePeopleVisible && havePeople;
+            return PeopleVisibility != Visibility.Visible;
         }
 
         public void ShowPeople(object obj)
         {
-            ArePeopleVisible = Visibility.Visible;
+            PeopleVisibility = Visibility.Visible;
         }
         #endregion
 
@@ -66,6 +102,9 @@ namespace CS_Take_Home_Challenge
         private void LoadCommands_()
         {
             ShowPeopleCommand = new CustomCommand(ShowPeople, CanShowPeople);
+            DisplayAddPersonDialogueCommand = new CustomCommand(DisplayAddPersonDialogue, (o) => { return true; });
+            DisplayEditPersonDialogueCommand = new CustomCommand(DisplayEditPersonDialogue, CanDisplayEditPersonDialogue);
+            RemovePersonCommand = new CustomCommand(RemovePerson, CanRemovePerson);
         }
 
         private void RaisePropertyChanged_(string propertyName)

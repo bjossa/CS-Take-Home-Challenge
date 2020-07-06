@@ -5,107 +5,120 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CS_Take_Home_Challenge"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-
+        Title="MainWindow"
+        Background="DodgerBlue">
     <Window.Resources>
         <local:PersonValueConverter x:Key="IsActiveToForegroundColourConv"/>
+
+        <DataTemplate x:Key="PeopleHeaderTemplate">
+            <TextBlock Grid.Column="0" Width="300" Height="30" Text="{Binding}" local:SortPeopleBehaviour.SortColumnHeader="True" TextAlignment="Center" Background="RoyalBlue" Foreground="AntiqueWhite"/>
+        </DataTemplate>
+
+        <Style x:Key="SameVisibilityAsPeopleStyle" TargetType="FrameworkElement">
+            <Setter Property="Visibility">
+                <Setter.Value>
+                    <Binding Path="PeopleVisibility" Mode="OneWay"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="MediumBlue"/>
+            <Setter Property="Foreground" Value="AntiqueWhite"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="PersonDataTextBlockStyle">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Foreground" Value="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Navy"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
 
-    <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
-            <TextBox x:Name="FilePathInputTextBox" Width="300" Height="100" Text="Enter filePath here"/>
-            <Button Content="Submit" Width="300" Height="100" Command="{Binding InputFilePathCommand}" CommandParameter="{Binding ElementName=FilePathInputTextBox, Path=Text}"/>
+    <DockPanel HorizontalAlignment="Center">
+        <!-- input button and text field for filePath-->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center">
+            <TextBox x:Name="FilePathInputTextBox" Width="300" Height="30" Text="Enter filePath here"/>
+            <Button Content="Submit" Width="250" Height="30" Command="{Binding InputFilePathCommand}" CommandParameter="{Binding ElementName=FilePathInputTextBox, Path=Text}"/>
+            <Button x:Name="ShowPeopleButton" Width="250" Height="30" Content="Show People" Command="{Binding ShowPeopleCommand}"/>
         </StackPanel>
-        <Button x:Name="ShowPeopleButton" Width="100" Height="100" Content="Show People" Command="{Binding ShowPeopleCommand}"/>
 
         <!-- todo: add a submit button so that a user can edit a person without submitting the changes right away, and also they can cancel the changes they were going to make with a cancel button. idea: Have something
                         in the button that the textboxes are listening to, and when you submit, that things changes, and then this triggers an event in the textbox for it to forward the info in its text to the bound property.
                         upon clicking cancel, you would just update the textboxes with what's currently in the model, since that hasn't changed, and change the editability of the textboxes back to false.-->
-        <!-- If a person is not active, can they be edited??-->
-        <!-- for now we have that the button inherits the data context from the ListBox-->
-        <!-- todo: can we send a command directly to the textboxes so that the EditPersonCommand doesn't even need to exist at all?-->
         <ListView ItemsSource="{Binding Path=People, Mode=OneWay}"
-				 Visibility="{Binding ArePeopleVisible, Mode=OneWay}"
-                 x:Name="PeopleListView">
+                  x:Name="PeopleListView"
+                  SelectionMode="Single"
+                  SelectedItem="{Binding Path=SelectedPerson, Mode=TwoWay}"
+                  Style="{StaticResource SameVisibilityAsPeopleStyle}"
+                  DockPanel.Dock="Top"
+                  Background="DarkBlue"
+                  HorizontalContentAlignment="Center"
+                 >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="100" Header=" ">
+
+                    <GridViewColumn Width="300"
+                                    Header="Name"
+                                    HeaderTemplate="{StaticResource PeopleHeaderTemplate}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit" Height="50" Command="{Binding ChangePersonEditabilityCommand}"/>
+                                <TextBlock Grid.Column="0" Text="{Binding Path=Name, Mode=TwoWay}" Style="{StaticResource PersonDataTextBlockStyle}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
+
                     </GridViewColumn>
 
-                    <GridViewColumn Width="200">
-                        <GridViewColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Grid.Column="0" Width="100" Height="30" Text="Name" />
-                            </DataTemplate>
-                        </GridViewColumn.HeaderTemplate>
+                    <GridViewColumn Width="300"
+                                    Header="Address"
+                                    HeaderTemplate="{StaticResource PeopleHeaderTemplate}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Width="100" Height="50" Grid.Column="1" Text="{Binding Path=Name, Mode=TwoWay}" IsReadOnly="{Binding Path=IsReadOnly}"
-                                   Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=Address, Mode=TwoWay}" Style="{StaticResource PersonDataTextBlockStyle}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
+
                     </GridViewColumn>
 
-                    <GridViewColumn Width="200">
-                        <GridViewColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Grid.Column="0" Width="100" Height="30" Text="Address" />
-                            </DataTemplate>
-                        </GridViewColumn.HeaderTemplate>
+                    <GridViewColumn Width="300"
+                                    Header="Phone"
+                                    HeaderTemplate="{StaticResource PeopleHeaderTemplate}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Width="100" Height="50" Grid.Column="1" Text="{Binding Path=Address, Mode=TwoWay}" IsReadOnly="{Binding Path=IsReadOnly}"
-                                   Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Path=Phone, Mode=TwoWay}" Style="{StaticResource PersonDataTextBlockStyle}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
-                    <GridViewColumn Width="200">
-                        <GridViewColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Grid.Column="0" Width="100" Height="30" Text="Phone" />
-                            </DataTemplate>
-                        </GridViewColumn.HeaderTemplate>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Width="100" Height="50" Grid.Column="1" Text="{Binding Path=Phone, Mode=TwoWay}" IsReadOnly="{Binding Path=IsReadOnly}"
-                                   Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <!-- todo: make this change from a textblock to a textbox when a user hits the edit button. The content of this control is fed to a converter which takes in the editability and spits out a textblock or textbox appropriately.-->
                 </GridView>
+
             </ListView.View>
+            
         </ListView>
-    </StackPanel>
+
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" x:Name="EditPeopleStackPanel" Style="{StaticResource SameVisibilityAsPeopleStyle}" HorizontalAlignment="Center">
+            <Button Content="Add Person" Width="250" Height="30" Command="{Binding DisplayAddPersonDialogueCommand}"/>
+            <Button Content="Edit Person" Width="250" Height="30" Command="{Binding DisplayEditPersonDialogueCommand}"/>
+            <Button Content="Remove Person" Width="250" Height="30" Command="{Binding RemovePersonCommand}"/>
+        </StackPanel>
+    </DockPanel>
 
 
 </Window>
 
-
-<!-- <Grid Height="30" Width="800">
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
-
-    <TextBlock Grid.Column="0" Width="100" Height="30" Text="Name" />
-    <TextBlock Grid.Column="1" Width="100" Height="30" Text="Address" />
-    <TextBlock Grid.Column="2" Width="100" Height="30" Text="Phone" />
-    </Grid> 
     
     
     
-    
+    <!--
      Display People as a stackpanel
 <ListBox ItemsSource="{Binding Path=People, Mode=OneWay}"
-				 Visibility="{Binding ArePeopleVisible, Mode=OneWay}"
+				 Visibility="{Binding PeopleVisibility, Mode=OneWay}"
                  x:Name="PeopleListBox">
 
     <ListBox.ItemsPanel>

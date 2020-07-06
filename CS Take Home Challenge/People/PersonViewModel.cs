@@ -20,13 +20,13 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region Properties
-
         #endregion
 
         #region Dependency Properties
         #endregion
 
         #region Commands
+
         #endregion
 
         #region Public Methods

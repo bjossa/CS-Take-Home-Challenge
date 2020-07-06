@@ -11,7 +11,7 @@ namespace CsTakeHomeChallengeTest.Converters
     [TestFixture]
     class PersonValueConverterTests
     {
-        private const string k_black = "Black";
+        private const string k_white = "AntiqueWhite";
         private const string k_gray = "Gray";
         [Test]
         public void Convert_TruetoBlack()
@@ -23,7 +23,7 @@ namespace CsTakeHomeChallengeTest.Converters
             var result = systemUnderTest.Convert(true, null, null, null);
 
             // Assert
-            Assert.AreEqual(result, k_black);
+            Assert.AreEqual(result, k_white);
         }
 
         [Test]

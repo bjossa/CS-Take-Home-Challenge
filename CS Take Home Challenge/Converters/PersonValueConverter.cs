@@ -15,7 +15,7 @@ namespace CS_Take_Home_Challenge
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool IsActive = (bool) value;
-            return IsActive ? "Black" : "Gray";
+            return IsActive ? "AntiqueWhite" : "Gray";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
