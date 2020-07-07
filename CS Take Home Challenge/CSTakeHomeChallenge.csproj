@@ -68,7 +68,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DialogService\DialogCloseRequestedEventArgs.cs" />
+    <Compile Include="DialogService\DialogService.cs" />
+    <Compile Include="DialogService\Dialogs\AddPersonDialog.xaml.cs">
+      <DependentUpon>AddPersonDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogService\Dialogs\EditPersonDialog.xaml.cs">
+      <DependentUpon>EditPersonDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogService\DialogViewModels\AddPersonDialogueViewModel.cs" />
+    <Compile Include="DialogService\DialogViewModels\EditPersonDialogueViewModel.cs" />
+    <Compile Include="DialogService\IDialog.cs" />
+    <Compile Include="DialogService\IDialogRequestClose.cs" />
+    <Compile Include="DialogService\IDialogService.cs" />
     <Compile Include="SortPeopleBehavior.cs" />
+    <Page Include="DialogService\Dialogs\AddPersonDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogService\Dialogs\EditPersonDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

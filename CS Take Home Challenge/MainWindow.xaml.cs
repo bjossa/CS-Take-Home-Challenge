@@ -25,12 +25,12 @@ namespace CS_Take_Home_Challenge
         {
             InitializeComponent();
 
-            IPersonListViewModel m_PersonListViewModel = new PersonListViewModel();
-            MainWindowViewModel m_mainWindowViewModel = new MainWindowViewModel(m_PersonListViewModel);
-            DataContext = m_mainWindowViewModel;
-            PeopleListView.DataContext = m_PersonListViewModel;
-            ShowPeopleButton.DataContext = m_PersonListViewModel; ;
-            EditPeopleStackPanel.DataContext = m_PersonListViewModel;
+            //IPersonListViewModel m_PersonListViewModel = new PersonListViewModel();
+            //MainWindowViewModel m_mainWindowViewModel = new MainWindowViewModel(m_PersonListViewModel);
+            //DataContext = m_mainWindowViewModel;
+            //PeopleListView.DataContext = m_PersonListViewModel;
+            //ShowPeopleButton.DataContext = m_PersonListViewModel; ;
+            //EditPeopleStackPanel.DataContext = m_PersonListViewModel;
 
         }
     }

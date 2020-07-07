@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CS_Take_Home_Challenge.DialogService;
+using CS_Take_Home_Challenge.DialogService.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,12 +19,14 @@ namespace CS_Take_Home_Challenge
         #region Private Fields
         private Visibility m_peopleVisibility = Visibility.Hidden;
         private IPersonViewModel m_selectedPerson;
+        private IDialogService m_dialogService;
         #endregion
 
         #region Constructors
-        public PersonListViewModel(ObservableCollection<IPersonViewModel> people = null)
+        public PersonListViewModel(IDialogService dialogService = null , ObservableCollection<IPersonViewModel> people = null)
         {
             People = people ?? new ObservableCollection<IPersonViewModel>();
+            m_dialogService = dialogService ?? new DialogService.DialogService(null); // could be improved and still work for testing?
             LoadCommands_();
         }
         #endregion
@@ -62,7 +66,22 @@ namespace CS_Take_Home_Challenge
 
         public void DisplayAddPersonDialogue(object o)
         {
-            //stub
+            var viewModel = new AddPersonDialogueViewModel();
+
+            bool? result = m_dialogService.ShowDialog(viewModel);
+
+            if (result.HasValue)
+            {
+                if (result.Value)
+                {
+                    AddPersonViewModel(viewModel.AddedPersonViewModel);
+                }
+                else
+                {
+                    // Cancelled
+                }
+                // todo: destroy the viewModel here?
+            }
         }
 
         public void DisplayEditPersonDialogue(object o)
