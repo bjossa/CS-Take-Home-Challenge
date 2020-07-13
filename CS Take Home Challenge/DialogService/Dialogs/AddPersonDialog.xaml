@@ -13,7 +13,7 @@
         ResizeMode="CanResizeWithGrip"
         ShowInTaskbar="False">
 
-    <Grid>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.Resources>
             <Style TargetType="{x:Type Label}">
                 <Setter Property="Grid.Column" Value="0"/>
@@ -25,7 +25,15 @@
                 <Setter Property="Grid.Column" Value="1"/>
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Width"  Value="50"/>
+                <Setter Property="Width"  Value="100"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Grid.Row" Value="4"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Width"  Value="80"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
         </Grid.Resources>
@@ -45,14 +53,14 @@
         <Label Grid.Row="0">Name</Label>
         <Label Grid.Row="1">Address</Label>
         <Label Grid.Row="2">Phone</Label>
-        <Label Grid.Row="3">IsActive</Label>
 
         <TextBox Grid.Row="0" Text="{Binding Path=Name, Mode=TwoWay}"/>
         <TextBox Grid.Row="1" Text="{Binding Path=Address, Mode=TwoWay}"/>
         <TextBox Grid.Row="2" Text="{Binding Path=Phone, Mode=TwoWay}"/>
-        <CheckBox Content="IsActive" IsChecked="{Binding IsActive}" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0"/>
-        <Button Content="Add" Command="{Binding AddPersonCommand}" Grid.Row="4" Grid.Column="1" Width="30"/>
-        <Button Content="Cancel" Command="{Binding CancelAddPersonCommand}" Grid.Row="4" Grid.Column="1" Width="30"/>
+        <CheckBox Content="IsActive" FontSize="15" IsChecked="{Binding IsActive}" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+
+        <Button Grid.Column="0" Content="Add" Command="{Binding AddPersonCommand}"/>
+        <Button Grid.Column="1" Content="Cancel" Command="{Binding CancelAddPersonCommand}"/>
 
 
     </Grid>

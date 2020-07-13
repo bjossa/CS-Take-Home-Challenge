@@ -15,7 +15,7 @@ namespace CS_Take_Home_Challenge
         {
             m_person = person;
             LoadCommands_();
-            IsReadOnly = true;
+            //IsReadOnly = true;
         }
         #endregion
 
@@ -30,16 +30,16 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region Public Methods
-        public void ChangePersonEditability(object o)
-        {
-            IsReadOnly = !IsReadOnly;
-        }
+        //public void ChangePersonEditability(object o)
+        //{
+        //    IsReadOnly = !IsReadOnly;
+        //}
         #endregion
 
         #region Private Methods
         private void LoadCommands_()
         {
-            ChangePersonEditabilityCommand = new CustomCommand(ChangePersonEditability, (o) => { return true; });
+            //ChangePersonEditabilityCommand = new CustomCommand(ChangePersonEditability, (o) => { return true; });
         }
         #endregion
 
@@ -83,21 +83,21 @@ namespace CS_Take_Home_Challenge
             }
         }
 
-        private bool m_isReadOnly;
-        public virtual bool IsReadOnly
-        {
-            get
-            {
-                return m_isReadOnly;
-            }
-            set
-            {
-                m_isReadOnly = value;
-                RaisePropertyChanged_("IsReadOnly");
-            }
-        }
+        //private bool m_isReadOnly;
+        //public virtual bool IsReadOnly
+        //{
+        //    get
+        //    {
+        //        return m_isReadOnly;
+        //    }
+        //    set
+        //    {
+        //        m_isReadOnly = value;
+        //        RaisePropertyChanged_("IsReadOnly");
+        //    }
+        //}
 
-        public ICommand ChangePersonEditabilityCommand { get; set; }
+        //public ICommand ChangePersonEditabilityCommand { get; set; }
         #endregion
 
         #region Implementation of <INotifyPropertyChanged>

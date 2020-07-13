@@ -15,8 +15,8 @@ namespace CS_Take_Home_Challenge
         string Phone { get; set; }
         bool IsActive { get; set; }
 
-        bool IsReadOnly {get; set;}
+        //bool IsReadOnly {get; set;}
 
-        ICommand ChangePersonEditabilityCommand { get; set; }
+        //ICommand ChangePersonEditabilityCommand { get; set; }
 	}
 }

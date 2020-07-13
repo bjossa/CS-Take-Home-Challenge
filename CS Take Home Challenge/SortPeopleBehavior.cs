@@ -27,7 +27,6 @@ namespace CS_Take_Home_Challenge
             obj.SetValue(SortColumnHeaderProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for SortColumnHeader.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SortColumnHeaderProperty =
             DependencyProperty.RegisterAttached("SortColumnHeader"
                 , typeof(bool)
