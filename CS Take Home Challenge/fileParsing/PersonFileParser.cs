@@ -1,4 +1,5 @@
-﻿using CS_Take_Home_Challenge.fileParsing;
+﻿using CS_Take_Home_Challenge.Factory;
+using CS_Take_Home_Challenge.fileParsing;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -16,11 +17,14 @@ namespace CS_Take_Home_Challenge
     {
 
         #region private members
+        private IPersonFactory m_personFactory;
+
         #endregion
 
         #region Constructors
-        public PersonFileParser()
+        public PersonFileParser(IPersonFactory personFactory= null)
         {
+            m_personFactory = personFactory ?? new PersonFactory();
         }
         #endregion
 
@@ -82,7 +86,7 @@ namespace CS_Take_Home_Challenge
         {
             string[] properties = str.Split(new string[] { ", " }, StringSplitOptions.None);
             properties = properties.Select(x => x.Trim()).ToArray();
-            Person person = new Person(properties[0], properties[1], properties[2], bool.Parse(properties[3]));
+            Person person = m_personFactory.CreatePerson(properties[0], properties[1], properties[2], bool.Parse(properties[3]));
             return person;
         }
 

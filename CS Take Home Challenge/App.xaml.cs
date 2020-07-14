@@ -22,12 +22,9 @@ namespace CS_Take_Home_Challenge
             dialogService.Register<EditPersonDialogueViewModel, EditPersonDialog>();
             dialogService.Register<AddPersonDialogueViewModel, AddPersonDialog>();
 
-            IPersonListViewModel personListViewModel = new PersonListViewModel(dialogService);
-            var viewModel = new MainWindowViewModel(personListViewModel);
+            IPersonListViewModel personListViewModel = new PersonListViewModel();
+            var viewModel = new MainWindowViewModel(dialogService, personListViewModel);
             var view = new MainWindow { DataContext = viewModel };
-            //view.PeopleListView.DataContext = personListViewModel;
-            //view.ShowPeopleButton.DataContext = personListViewModel;
-            //view.EditPeopleStackPanel.DataContext = personListViewModel;
 
             view.ShowDialog();
         }

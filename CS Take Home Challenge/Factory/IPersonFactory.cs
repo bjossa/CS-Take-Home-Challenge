@@ -10,5 +10,6 @@ namespace CS_Take_Home_Challenge.Factory
     public interface IPersonFactory
     {
         ObservableCollection<IPersonViewModel> CreatePeopleViewModels(ICollection<Person> people);
+        Person CreatePerson(string name, string address, string phone, bool isActive = true);
     }
 }

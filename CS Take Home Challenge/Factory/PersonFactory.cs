@@ -18,5 +18,10 @@ namespace CS_Take_Home_Challenge.Factory
             }
             return peopleVMs;
         }
+
+        public Person CreatePerson(string name, string address, string phone, bool isActive = true)
+        {
+            return new Person(name, address, phone, isActive);
+        }
     }
 }

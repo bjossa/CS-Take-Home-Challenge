@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge
 {
-    // a model for a Person with a name, address, phone, isActive
     public class Person
     {
 

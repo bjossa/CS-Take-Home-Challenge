@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="DialogService\DialogCloseRequestedEventArgs.cs" />
     <Compile Include="DialogService\DialogService.cs" />
     <Compile Include="DialogService\Dialogs\AddPersonDialog.xaml.cs">
@@ -112,7 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow\MainWindowViewModel.cs" />
-    <Compile Include="Messanger.cs" />
     <Compile Include="People\IPersonListViewModel.cs" />
     <Compile Include="People\IPersonViewModel.cs" />
     <Compile Include="People\Person.cs" />
