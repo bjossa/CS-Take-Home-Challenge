@@ -20,35 +20,34 @@ namespace CS_Take_Home_Challenge
 	public class MainWindowViewModel : INotifyPropertyChanged
 	{
 
-		#region Private Fields
-		private IPersonListViewModel m_personListVM;
-		private IPersonFileParser m_parser;
+        #region Private Fields
+        private IPersonFileParser m_parser;
 		private IPersonFactory m_factory;
 		#endregion
 
 		#region Constructors
 		public MainWindowViewModel(IPersonListViewModel personListVM = null, IPersonFileParser parser = null, IPersonFactory factory = null)
 		{
-			m_personListVM = personListVM ?? new PersonListViewModel();
+			PersonListVM = personListVM ?? new PersonListViewModel();
 			m_parser = parser ?? new PersonFileParser();
 			m_factory = factory ?? new PersonFactory();
 			LoadCommands();
 		}
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
+        public IPersonListViewModel PersonListVM { get; }
+        #endregion
 
-		#endregion
+        #region Dependency Properties
+        #endregion
 
-		#region Dependency Properties
-		#endregion
+        #region Commands
+        public ICommand InputFilePathCommand { get; set; }
+        #endregion
 
-		#region Commands
-		public ICommand InputFilePathCommand { get; set; }
-		#endregion
-
-		#region Public Methods
-		public void InputFileFromPath(object filePathO)
+        #region Public Methods
+        public void InputFileFromPath(object filePathO)
 		{
 			string filePath = filePathO as string;
 			LoadPeopleAsync(filePath);
@@ -62,7 +61,7 @@ namespace CS_Take_Home_Challenge
             {
 				List<Person> people = await Task.Run(() => { return m_parser.LoadPeopleFromFile(filePath); }); //todo: figure out how to handle exceptions with your async code
 				ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
-				m_personListVM.populatePeople(peopleVMs);
+				PersonListVM.populatePeople(peopleVMs);
 			}
 			catch (ErrorLoadingPeopleException)
             {
