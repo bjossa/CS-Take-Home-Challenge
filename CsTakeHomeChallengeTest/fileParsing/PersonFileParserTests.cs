@@ -33,7 +33,7 @@ namespace CsTakeHomeChallengeTest.fileParsing
                 k_personString1,
                 k_personString2,
                 };
-            var systemUnderTest = new PersonFileParser();
+            var systemUnderTest = new PersonParser();
 
             //Act
             List<Person> result = systemUnderTest.LoadPeopleFromFile(null, unparsedPeople);
@@ -53,27 +53,27 @@ namespace CsTakeHomeChallengeTest.fileParsing
         public void LoadPeopleFromFile_inValidFileData_ThrowsException()
         {
             //Arrange
-            var systemUnderTest = new PersonFileParser();
+            var systemUnderTest = new PersonParser();
 
             //Act/Assert
-            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.LoadPeopleFromFile(k_filePath, null); });
+            Assert.Throws(typeof(FileCommunicationException ), () => { systemUnderTest.LoadPeopleFromFile(k_filePath, null); });
 
         }
         [Test]
         public void LoadPeopleFromFile_inValidArguments_ThrowsException()
         {
             //Arrange
-            var systemUnderTest = new PersonFileParser();
+            var systemUnderTest = new PersonParser();
 
             //Act/Assert
-            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.LoadPeopleFromFile(null, null); });
+            Assert.Throws(typeof(FileCommunicationException ), () => { systemUnderTest.LoadPeopleFromFile(null, null); });
         }
 
         [Test]
         public void ToPersonValidTest()
         {
             //Arrange
-            var systemUnderTest = new PersonFileParser();
+            var systemUnderTest = new PersonParser();
 
             //Act
             Person result = systemUnderTest.ToPerson(k_personString1);
@@ -89,11 +89,11 @@ namespace CsTakeHomeChallengeTest.fileParsing
         public void ToPersonInvalidShouldThrowException()
         {
             //Arrange
-            var systemUnderTest = new PersonFileParser();
+            var systemUnderTest = new PersonParser();
 
             //Act/Assert
-            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.ToPerson(k_personStringInvalidMissingComma); });
-            Assert.Throws(typeof(ErrorLoadingPeopleException), () => { systemUnderTest.ToPerson(k_personStringInvalidNoBool); });
+            Assert.Throws(typeof(FileCommunicationException ), () => { systemUnderTest.ToPerson(k_personStringInvalidMissingComma); });
+            Assert.Throws(typeof(FileCommunicationException ), () => { systemUnderTest.ToPerson(k_personStringInvalidNoBool); });
         }
     }
 }

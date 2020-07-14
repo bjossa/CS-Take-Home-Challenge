@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CS_Take_Home_Challenge.Factory;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,13 +16,15 @@ namespace CS_Take_Home_Challenge.DialogService.Dialogs
         private string m_Address;
         private string m_Phone;
         private bool m_IsActive;
+        private IPersonFactory m_personFactory;
         #endregion
 
         #region Constructors
-        public AddPersonDialogueViewModel()
+        public AddPersonDialogueViewModel(IPersonFactory personFactory = null)
         {
             AddPersonCommand = new CustomCommand(AddPerson, (o) => { return true; });
             CancelAddPersonCommand = new CustomCommand(CancelAddPerson, (o) => { return true; });
+            m_personFactory = personFactory ?? new PersonFactory();
             Name = "";
             Phone = "";
             Address = "";
@@ -83,8 +86,8 @@ namespace CS_Take_Home_Challenge.DialogService.Dialogs
         #region Public Methods
         public void AddPerson(object o)
         {
-            Person person = new Person(Name, Address, Phone, IsActive);
-            AddedPersonViewModel = new PersonViewModel(person);
+            Person person = m_personFactory.CreatePerson(Name, Address, Phone, IsActive);
+            AddedPersonViewModel = m_personFactory.CreatePersonViewModel(person);
             CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
         }
 

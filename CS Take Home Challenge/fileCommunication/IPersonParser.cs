@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge.fileParsing
 {
-    public interface IPersonFileParser
+    public interface IPersonParser
     {
-        List<Person> LoadPeopleFromFile(string filePath = null, string[] p_unparsedPeople = null);
+        List<Person> ParseStringsToPeople(string[] unparsedPeople = null);
     }
 }

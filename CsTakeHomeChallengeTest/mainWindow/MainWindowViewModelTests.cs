@@ -29,7 +29,7 @@ namespace CsTakeHomeChallengeTest.mainWindow
         {
             //Arrange
             var factoryMock = new Mock<IPersonFactory>();
-            var parserMock = new Mock<IPersonFileParser>();
+            var parserMock = new Mock<IPersonParser>();
             var personListVMMock = new Mock<IPersonListViewModel>();
             var mockPerson1 = new Mock<Person>();
             var mockPerson2 = new Mock<Person>();

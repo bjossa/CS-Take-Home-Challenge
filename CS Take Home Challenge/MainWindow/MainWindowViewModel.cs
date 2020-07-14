@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.IO.Packaging;
 using CS_Take_Home_Challenge.DialogService;
 using CS_Take_Home_Challenge.DialogService.Dialogs;
+using CS_Take_Home_Challenge.fileCommunication;
 
 namespace CS_Take_Home_Challenge
 {
@@ -23,19 +24,20 @@ namespace CS_Take_Home_Challenge
 	{
 
         #region Private Fields
-        private IPersonFileParser m_parser;
+        private IPersonParser m_parser;
 		private IPersonFactory m_factory;
 		private IDialogService m_dialogService;
+		private IFileFacade m_fileFacade;
 		private bool m_haveFilePath;
 		#endregion
 
 		#region Constructors
-		public MainWindowViewModel(IDialogService dialogService = null, IPersonListViewModel personListVM = null, IPersonFileParser parser = null, IPersonFactory factory = null)
+		public MainWindowViewModel(IDialogService dialogService = null, IPersonListViewModel personListVM = null, IPersonParser parser = null, IPersonFactory factory = null, IFileFacade fileFacade = null)
 		{
 			m_dialogService = dialogService ?? new DialogService.DialogService(null); // could be improved and still work for testing?
 			PersonListVM = personListVM ?? new PersonListViewModel();
 			m_factory = factory ?? new PersonFactory();
-			m_parser = parser ?? new PersonFileParser(factory);
+			m_parser = parser ?? new PersonParser(factory);
 			LoadCommands();
 			HaveFilePath = false;
 		}
@@ -72,12 +74,20 @@ namespace CS_Take_Home_Challenge
 		public void InputFileFromPath(object filePathO)
 		{
 			string filePath = filePathO as string;
-			LoadPeopleAsync(filePath);
+			OpenFileCommunication(filePath);
+			LoadPeopleAsync();
 		}
+
+		// do any destruction of old file connection here.
+		public void OpenFileCommunication(string filePath)
+        {
+			// todo: validate the filePath before passing to external resource (maybe)
+			m_fileFacade = new FileFacade(filePath);
+        }
 
 		public void DisplayAddPersonDialogue(object o)
 		{
-			var viewModel = new AddPersonDialogueViewModel();
+			var viewModel = new AddPersonDialogueViewModel(m_factory);
 
 			bool? result = m_dialogService.ShowDialog(viewModel);
 
@@ -117,21 +127,28 @@ namespace CS_Take_Home_Challenge
 		}
 
 
-		public async void LoadPeopleAsync(string filePath)
+		public async void LoadPeopleAsync()
 		{
-			// todo: validate the filePath before passing to external resource (maybe)
 			try
             {
-				List<Person> people = await Task.Run(() => { return m_parser.LoadPeopleFromFile(filePath); }); //todo: figure out how to handle exceptions with your async code
+				List<Person> people = await Task.Run(ParsePeopleFromFile);
 				ObservableCollection<IPersonViewModel> peopleVMs = m_factory.CreatePeopleViewModels(people);
 				PersonListVM.populatePeople(peopleVMs);
 				HaveFilePath = true;
 			}
-			catch (ErrorLoadingPeopleException)
+			catch (FileCommunicationException)
             {
 				//todo: display some error message to the UI
             }
 			
+		}
+
+		// call this function asynchronously
+		public List<Person> ParsePeopleFromFile()
+        {
+			string[] unparsedPeople = m_fileFacade.ReadLinesFromFile();
+			List<Person> people = m_parser.ParseStringsToPeople(unparsedPeople);
+			return people;
 		}
 		#endregion
 

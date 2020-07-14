@@ -82,6 +82,10 @@
     <Compile Include="DialogService\IDialog.cs" />
     <Compile Include="DialogService\IDialogRequestClose.cs" />
     <Compile Include="DialogService\IDialogService.cs" />
+    <Compile Include="Exceptions\FileCommunicationException.cs" />
+    <Compile Include="Exceptions\PeopleParsingException.cs" />
+    <Compile Include="fileCommunication\FileFacade.cs" />
+    <Compile Include="fileCommunication\IFileFacade.cs" />
     <Compile Include="SortPeopleBehavior.cs" />
     <Page Include="DialogService\Dialogs\AddPersonDialog.xaml">
       <SubType>Designer</SubType>
@@ -101,11 +105,10 @@
     </Compile>
     <Compile Include="Converters\PersonValueConverter.cs" />
     <Compile Include="CustomCommand.cs" />
-    <Compile Include="ErrorLoadingPeopleException.cs" />
     <Compile Include="Factory\IPersonFactory.cs" />
     <Compile Include="Factory\PersonFactory.cs" />
-    <Compile Include="fileParsing\IPersonFileParser.cs" />
-    <Compile Include="fileParsing\PersonFileParser.cs" />
+    <Compile Include="fileCommunication\IPersonParser.cs" />
+    <Compile Include="fileCommunication\PersonParser.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

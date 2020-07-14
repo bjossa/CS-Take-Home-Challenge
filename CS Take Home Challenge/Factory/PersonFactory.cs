@@ -23,5 +23,10 @@ namespace CS_Take_Home_Challenge.Factory
         {
             return new Person(name, address, phone, isActive);
         }
+
+        public IPersonViewModel CreatePersonViewModel(Person person)
+        {
+            return new PersonViewModel(person);
+        }
     }
 }
