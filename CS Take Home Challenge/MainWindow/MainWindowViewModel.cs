@@ -17,6 +17,7 @@ using System.IO.Packaging;
 using CS_Take_Home_Challenge.DialogService;
 using CS_Take_Home_Challenge.DialogService.Dialogs;
 using CS_Take_Home_Challenge.fileCommunication;
+using System.IO;
 
 namespace CS_Take_Home_Challenge
 {
@@ -74,15 +75,27 @@ namespace CS_Take_Home_Challenge
 		public void InputFileFromPath(object filePathO)
 		{
 			string filePath = filePathO as string;
-			OpenFileCommunication(filePath);
-			LoadPeopleAsync();
+			bool fileIsValid = OpenFileCommunication(filePath);
+			if (fileIsValid)
+			{
+				LoadPeopleAsync();
+			}
 		}
 
 		// do any destruction of old file connection here.
-		public void OpenFileCommunication(string filePath)
+		public bool OpenFileCommunication(string filePath)
         {
-			// todo: validate the filePath before passing to external resource (maybe)
-			m_fileFacade = new FileFacade(filePath);
+			try
+            {
+				File.Open(filePath, FileMode.Open);
+				m_fileFacade = new FileFacade(filePath);
+				return true;
+			}
+			catch (FileNotFoundException)
+            {
+				//todo: tell the user that the file was not valid.
+				return false;
+            }
         }
 
 		public void DisplayAddPersonDialogue(object o)
@@ -101,7 +114,6 @@ namespace CS_Take_Home_Challenge
 				{
 					// Cancelled
 				}
-				// todo: destroy the viewModel here?
 			}
 		}
 
@@ -136,7 +148,7 @@ namespace CS_Take_Home_Challenge
 				PersonListVM.populatePeople(peopleVMs);
 				HaveFilePath = true;
 			}
-			catch (FileCommunicationException)
+			catch (PeopleParsingException)
             {
 				//todo: display some error message to the UI
             }

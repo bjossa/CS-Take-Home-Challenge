@@ -17,7 +17,7 @@ namespace CS_Take_Home_Challenge
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            DialogService.IDialogService dialogService = new DialogService.DialogService(MainWindow); //todo: is the MainWindow here correct?
+            DialogService.IDialogService dialogService = new DialogService.DialogService(MainWindow);
 
             dialogService.Register<EditPersonDialogueViewModel, EditPersonDialog>();
             dialogService.Register<AddPersonDialogueViewModel, AddPersonDialog>();

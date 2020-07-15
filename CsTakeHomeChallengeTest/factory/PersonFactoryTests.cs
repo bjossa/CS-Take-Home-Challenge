@@ -41,11 +41,46 @@ namespace CsTakeHomeChallengeTest.factory
             ObservableCollection<IPersonViewModel> results = systemUnderTest.CreatePeopleViewModels(people);
 
             //Assert
+            Assert.IsNotNull(results);
             IPersonViewModel personVM = results[0];
             Assert.AreEqual(personVM.Name, k_personName);
             Assert.AreEqual(personVM.Address, k_personAddress);
             Assert.AreEqual(personVM.Phone, k_personPhone);
             Assert.AreEqual(personVM.IsActive, k_personIsActive);
+        }
+
+        [Test]
+        public void CreatePersonTest()
+        {
+            //Arrange
+            var systemUnderTest = new PersonFactory();
+
+            //Act
+            Person result = systemUnderTest.CreatePerson(k_personName, k_personAddress, k_personPhone, k_personIsActive);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Name, k_personName);
+            Assert.AreEqual(result.Address, k_personAddress);
+            Assert.AreEqual(result.Phone, k_personPhone);
+            Assert.AreEqual(result.IsActive, k_personIsActive);
+        }
+
+        [Test]
+        public void CreatePersonViewModelTest()
+        {
+            //Arrange
+            var systemUnderTest = new PersonFactory();
+
+            //Act
+            IPersonViewModel result = systemUnderTest.CreatePersonViewModel(m_mockPerson.Object);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Name, k_personName);
+            Assert.AreEqual(result.Address, k_personAddress);
+            Assert.AreEqual(result.Phone, k_personPhone);
+            Assert.AreEqual(result.IsActive, k_personIsActive);
         }
     }
 }

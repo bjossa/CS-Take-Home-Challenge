@@ -9,6 +9,7 @@ using Moq;
 
 namespace CsTakeHomeChallengeTest.fileParsing
 {
+    //TODO: REFACTOR INTO 2 TEST CLASSES
     [TestFixture]
     class PersonFileParserTests
     {

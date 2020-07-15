@@ -52,7 +52,5 @@ namespace CsTakeHomeChallengeTest.mainWindow
             factoryMock.Verify(mock => mock.CreatePeopleViewModels(mockPeople), Times.Once);
             personListVMMock.Verify(mock => mock.populatePeople(mockPeopleVMs), Times.Once);
         }
-
-        // todo: any unhappy paths to test?
 	}
 }
