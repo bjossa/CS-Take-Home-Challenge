@@ -57,6 +57,10 @@ namespace CsTakeHomeChallengeTest.DialogViewModels
             mockPersonViewModel.SetupGet(mock => mock.Address).Returns(k_personAddress);
             mockPersonViewModel.SetupGet(mock => mock.Phone).Returns(k_personPhone);
             mockPersonViewModel.SetupGet(mock => mock.IsActive).Returns(k_personIsActive);
+            mockPersonViewModel.SetupProperty(mock => mock.Name);
+            mockPersonViewModel.SetupProperty(mock => mock.Address);
+            mockPersonViewModel.SetupProperty(mock => mock.Phone);
+            mockPersonViewModel.SetupProperty(mock => mock.IsActive);
             var systemUnderTest = new EditPersonDialogueViewModel(mockPersonViewModel.Object);
             systemUnderTest.Name = k_personName2;
             systemUnderTest.Address = k_personAddress2;

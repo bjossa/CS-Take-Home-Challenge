@@ -20,7 +20,7 @@ namespace CS_Take_Home_Challenge
         #region Specific Interface Implementation
 
         #region Implementation of <IPersonViewModel>
-        public virtual string Name
+        public string Name
         {
             get { return m_person.Name; }
             set 
@@ -29,7 +29,7 @@ namespace CS_Take_Home_Challenge
                 RaisePropertyChanged_("Name");
             }
         }
-        public virtual string Address 
+        public string Address 
         {
             get { return m_person.Address; }
             set
@@ -38,7 +38,7 @@ namespace CS_Take_Home_Challenge
                 RaisePropertyChanged_("Address");
             }
         }
-        public virtual string Phone 
+        public string Phone 
         {
             get { return m_person.Phone; }
             set
@@ -47,7 +47,7 @@ namespace CS_Take_Home_Challenge
                 RaisePropertyChanged_("Phone");
             }
         }
-        public virtual bool IsActive 
+        public bool IsActive 
         {
             get { return m_person.IsActive; }
             set

@@ -19,7 +19,7 @@ namespace CsTakeHomeChallengeTest.mainWindow
     class MainWindowViewModelTests
     {
         private const string k_invalidFilePath = "randomString";
-        private const string k_validFilePath = "C:\\devlist.txt";
+        private const string k_validFilePath = "C:\\Users\\erico\\OneDrive\\Desktop\\Data.txt";
         private const string k_fakePersonString = "FakePerson";
         private Mock<IPersonFactory> m_mockFactory;
         private Mock<IDialogService> m_mockDialogService;

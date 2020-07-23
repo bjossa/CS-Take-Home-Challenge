@@ -12,7 +12,7 @@ namespace CsTakeHomeChallengeTest.FileCommunication
     [TestFixture]
     class FileProxyTests
     {
-        private const string k_filePath = "C:\\Users\\Work\\Desktop\\Data.txt";
+        private const string k_filePath = "C:\\Users\\erico\\OneDrive\\Desktop\\Data.txt";
 
         [Test]
         public void ReadLinesFromFile_InvalidFilePath_ThrowsException()

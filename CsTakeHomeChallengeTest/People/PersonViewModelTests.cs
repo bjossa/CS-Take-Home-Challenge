@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Reflection;
 
 namespace CsTakeHomeChallengeTest.People
 {
@@ -45,24 +46,25 @@ namespace CsTakeHomeChallengeTest.People
         public void PropertyGetSetTest(String propertyName)
         {
             var mockPerson = new Mock<IPerson>();
+            mockPerson.SetupAllProperties();
             var systemUnderTest = new PersonViewModel(mockPerson.Object);
             switch (propertyName)
             {
-                case k_propertyName:
-                    systemUnderTest.GetType().GetProperty(propertyName).SetValue(systemUnderTest, k_personName);
-                    Assert.AreEqual(k_personName, systemUnderTest.GetType().GetProperty(propertyName).GetValue(systemUnderTest));
+                case "Name":
+                    systemUnderTest.Name = k_personName;
+                    Assert.AreEqual(k_personName, systemUnderTest.Name);
                     break;
-                case k_propertyAddress:
-                    systemUnderTest.GetType().GetProperty(propertyName).SetValue(systemUnderTest, k_personAddress);
-                    Assert.AreEqual(k_personAddress, systemUnderTest.GetType().GetProperty(propertyName).GetValue(systemUnderTest));
+                case "Address":
+                    systemUnderTest.Address = k_personAddress;
+                    Assert.AreEqual(k_personAddress, systemUnderTest.Address);
                     break;
-                case k_propertyPhone:
-                    systemUnderTest.GetType().GetProperty(propertyName).SetValue(systemUnderTest, k_personPhone);
-                    Assert.AreEqual(k_personPhone, systemUnderTest.GetType().GetProperty(propertyName).GetValue(systemUnderTest));
+                case "Phone":
+                    systemUnderTest.Phone = k_personPhone;
+                    Assert.AreEqual(k_personPhone, systemUnderTest.Phone);
                     break;
-                case k_propertyIsActive:
-                    systemUnderTest.GetType().GetProperty(propertyName).SetValue(systemUnderTest, k_personIsActive);
-                    Assert.AreEqual(k_personIsActive, systemUnderTest.GetType().GetProperty(propertyName).GetValue(systemUnderTest));
+                case "IsActive":
+                    systemUnderTest.IsActive = k_personIsActive;
+                    Assert.AreEqual(k_personIsActive, systemUnderTest.IsActive);
                     break;
             }
         }
