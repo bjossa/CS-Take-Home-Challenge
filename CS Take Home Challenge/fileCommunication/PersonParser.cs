@@ -32,9 +32,9 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region public methods
-        public List<Person> ParseStringsToPeople(string[] unparsedPeople)
+        public List<IPerson> ParseStringsToPeople(string[] unparsedPeople)
         {
-            List<Person> people = new List<Person>();
+            List<IPerson> people = new List<IPerson>();
             foreach (var unparsedPerson in unparsedPeople)
             {
                 people.Add(ToPerson(unparsedPerson));
@@ -46,11 +46,11 @@ namespace CS_Take_Home_Challenge
         /// 
         /// </summary>
         /// <param name="str"> "name, address, phone, isValid" </param>
-        public Person ToPerson(string str)
+        public IPerson ToPerson(string str)
         {
             string[] properties = str.Split(new string[] { ", " }, StringSplitOptions.None);
             properties = properties.Select(x => x.Trim()).ToArray();
-            Person person = m_personFactory.CreatePerson(properties[0], properties[1], properties[2], bool.Parse(properties[3]));
+            IPerson person = m_personFactory.CreatePerson(properties[0], properties[1], properties[2], bool.Parse(properties[3]));
             return person;
         }
 

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge
 {
-    public class Person
+    public class Person:
+        IPerson
     {
 
         #region Constructors
@@ -21,10 +22,10 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region Properties
-        public virtual string Name { get; set; }
-        public virtual string Address { get; set; }
-        public virtual string Phone { get; set; }
-        public virtual bool IsActive { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public bool IsActive { get; set; }
         #endregion
     }
 }

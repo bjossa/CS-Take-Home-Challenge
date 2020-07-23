@@ -16,7 +16,6 @@ namespace CS_Take_Home_Challenge
     public class PersonListViewModel : IPersonListViewModel
     {
         #region Private Fields
-        private IPersonViewModel m_selectedPerson;
         #endregion
 
         #region Constructors
@@ -27,15 +26,6 @@ namespace CS_Take_Home_Challenge
         #endregion
 
         #region Properties
-        public IPersonViewModel SelectedPerson
-        {
-            get => m_selectedPerson;
-            set
-            {
-                m_selectedPerson = value;
-                RaisePropertyChanged_("SelectedPerson");
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion

@@ -9,7 +9,7 @@ namespace CS_Take_Home_Challenge.Factory
 {
     public class PersonFactory: IPersonFactory
     {
-        public ObservableCollection<IPersonViewModel> CreatePeopleViewModels(ICollection<Person> people)
+        public ObservableCollection<IPersonViewModel> CreatePeopleViewModels(ICollection<IPerson> people)
         {
             ObservableCollection<IPersonViewModel> peopleVMs = new ObservableCollection<IPersonViewModel>();
             foreach (var person in people)
@@ -19,12 +19,12 @@ namespace CS_Take_Home_Challenge.Factory
             return peopleVMs;
         }
 
-        public Person CreatePerson(string name, string address, string phone, bool isActive = true)
+        public IPerson CreatePerson(string name, string address, string phone, bool isActive = true)
         {
             return new Person(name, address, phone, isActive);
         }
 
-        public IPersonViewModel CreatePersonViewModel(Person person)
+        public IPersonViewModel CreatePersonViewModel(IPerson person)
         {
             return new PersonViewModel(person);
         }

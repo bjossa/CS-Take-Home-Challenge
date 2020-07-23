@@ -9,6 +9,6 @@ namespace CS_Take_Home_Challenge.fileParsing
 {
     public interface IPersonParser
     {
-        List<Person> ParseStringsToPeople(string[] unparsedPeople = null);
+        List<IPerson> ParseStringsToPeople(string[] unparsedPeople = null);
     }
 }

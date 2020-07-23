@@ -18,12 +18,12 @@ namespace CsTakeHomeChallengeTest.factory
         private string k_personAddress = "address";
         private string k_personPhone = "phone";
         private bool k_personIsActive = true;
-        private Mock<Person> m_mockPerson;
+        private Mock<IPerson> m_mockPerson;
 
         [SetUp]
         public void SetUp()
         {
-            m_mockPerson = new Mock<Person>();
+            m_mockPerson = new Mock<IPerson>();
             m_mockPerson.SetupGet(mock => mock.Name).Returns(k_personName);
             m_mockPerson.SetupGet(mock => mock.Address).Returns(k_personAddress);
             m_mockPerson.SetupGet(mock => mock.Phone).Returns(k_personPhone);
@@ -35,7 +35,7 @@ namespace CsTakeHomeChallengeTest.factory
         {
             //Arrange
             var systemUnderTest = new PersonFactory();
-            List<Person> people = new List<Person>() { m_mockPerson.Object };
+            List<IPerson> people = new List<IPerson>() { m_mockPerson.Object };
 
             //Act
             ObservableCollection<IPersonViewModel> results = systemUnderTest.CreatePeopleViewModels(people);
@@ -56,7 +56,7 @@ namespace CsTakeHomeChallengeTest.factory
             var systemUnderTest = new PersonFactory();
 
             //Act
-            Person result = systemUnderTest.CreatePerson(k_personName, k_personAddress, k_personPhone, k_personIsActive);
+            IPerson result = systemUnderTest.CreatePerson(k_personName, k_personAddress, k_personPhone, k_personIsActive);
 
             //Assert
             Assert.IsNotNull(result);

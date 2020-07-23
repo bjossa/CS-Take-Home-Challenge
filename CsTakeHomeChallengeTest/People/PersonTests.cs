@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CS_Take_Home_Challenge;
+﻿using CS_Take_Home_Challenge;
 using NUnit.Framework;
 
 namespace CsTakeHomeChallengeTest.People
@@ -19,8 +14,6 @@ namespace CsTakeHomeChallengeTest.People
         [Test]
         public void Constructor_Test()
         {
-            // Arrange
-
             // Act
             var systemUnderTest = new Person(k_personName
             , k_personAddress
@@ -28,11 +21,10 @@ namespace CsTakeHomeChallengeTest.People
             , k_personIsActive);
 
             //Assert
-            Assert.AreEqual(systemUnderTest.Name, k_personName);
-            Assert.AreEqual(systemUnderTest.Address, k_personAddress);
-            Assert.AreEqual(systemUnderTest.Phone, k_personPhone);
-            Assert.AreEqual(systemUnderTest.IsActive, k_personIsActive);
-
+            Assert.AreEqual(k_personName, systemUnderTest.Name);
+            Assert.AreEqual(k_personAddress, systemUnderTest.Address);
+            Assert.AreEqual(k_personPhone, systemUnderTest.Phone);
+            Assert.AreEqual(k_personIsActive, systemUnderTest.IsActive);
         }
     }
 }

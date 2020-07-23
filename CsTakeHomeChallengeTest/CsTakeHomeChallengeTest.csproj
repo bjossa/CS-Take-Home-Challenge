@@ -71,12 +71,15 @@
   <ItemGroup>
     <Compile Include="Converters\PersonValueConverterTests.cs" />
     <Compile Include="Converters\VisibilityConverterTests.cs" />
+    <Compile Include="DialogViewModels\AddPersonDialogViewModelTests.cs" />
+    <Compile Include="DialogViewModels\EditPersonDialogViewModelTests.cs" />
     <Compile Include="factory\PersonFactoryTests.cs" />
-    <Compile Include="fileParsing\PersonFileParserTests.cs" />
+    <Compile Include="FileCommunication\FileProxyTests.cs" />
+    <Compile Include="FileCommunication\PersonParserTests.cs" />
     <Compile Include="mainWindow\MainWindowViewModelTests.cs" />
+    <Compile Include="People\PersonViewModelTests.cs" />
     <Compile Include="People\PersonListViewModelTests.cs" />
     <Compile Include="People\PersonTests.cs" />
-    <Compile Include="People\PersonViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

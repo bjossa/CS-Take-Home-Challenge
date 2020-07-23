@@ -7,30 +7,14 @@ namespace CS_Take_Home_Challenge
     {
 
         #region Private Fields
-        private Person m_person;
+        private IPerson m_person;
         #endregion
 
         #region Constructors
-        public PersonViewModel(Person person)
+        public PersonViewModel(IPerson person)
         {
             m_person = person;
         }
-        #endregion
-
-        #region Properties
-        #endregion
-
-        #region Dependency Properties
-        #endregion
-
-        #region Commands
-
-        #endregion
-
-        #region Public Methods
-        #endregion
-
-        #region Private Methods
         #endregion
 
         #region Specific Interface Implementation

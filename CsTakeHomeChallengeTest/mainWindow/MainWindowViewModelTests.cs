@@ -1,5 +1,8 @@
 ﻿using CS_Take_Home_Challenge;
+using CS_Take_Home_Challenge.DialogService;
+using CS_Take_Home_Challenge.DialogService.Dialogs;
 using CS_Take_Home_Challenge.Factory;
+using CS_Take_Home_Challenge.fileCommunication;
 using CS_Take_Home_Challenge.fileParsing;
 using Moq;
 using NUnit.Framework;
@@ -15,42 +18,249 @@ namespace CsTakeHomeChallengeTest.mainWindow
     [TestFixture]
     class MainWindowViewModelTests
     {
-        private const string k_filePath = "randomString";
+        private const string k_invalidFilePath = "randomString";
+        private const string k_validFilePath = "C:\\devlist.txt";
+        private const string k_fakePersonString = "FakePerson";
+        private Mock<IPersonFactory> m_mockFactory;
+        private Mock<IDialogService> m_mockDialogService;
+        private Mock<IPersonParser> m_mockParser;
+        private Mock<IFileProxy> m_mockFileProxy;
+        private Mock<IPersonListViewModel> m_mockPersonListVM;
+        private Mock<IPersonViewModel> m_mockPersonVM;
 
-        [Test]
-        public void ConstructorTest()
+        [SetUp]
+        public void SetUp()
         {
-            var systemUnderTest = new MainWindowViewModel();
-            Assert.IsNotNull(systemUnderTest.InputFilePathCommand);
+            m_mockFactory = new Mock<IPersonFactory>();
+            m_mockDialogService = new Mock<IDialogService>();
+            m_mockParser = new Mock<IPersonParser>();
+            m_mockFileProxy = new Mock<IFileProxy>();
+            m_mockPersonListVM = new Mock<IPersonListViewModel>();
+            m_mockPersonVM = new Mock<IPersonViewModel>();
         }
 
         [Test]
-        public void InputFilePathTest()
+        public void ConstructorTest_ActualParameters()
         {
-            //Arrange
-            var factoryMock = new Mock<IPersonFactory>();
-            var parserMock = new Mock<IPersonParser>();
-            var personListVMMock = new Mock<IPersonListViewModel>();
-            var mockPerson1 = new Mock<Person>();
-            var mockPerson2 = new Mock<Person>();
-            var mockPersonVM1 = new Mock<IPersonViewModel>();
-            var mockPersonVM2 = new Mock<IPersonViewModel>();
-            List<Person> mockPeople = new List<Person>(){ mockPerson1.Object, mockPerson2.Object };
-            ObservableCollection<IPersonViewModel> mockPeopleVMs = new ObservableCollection<IPersonViewModel>() { mockPersonVM1.Object, mockPersonVM2.Object };
+            // Act
+            var systemUnderTest = new MainWindowViewModel(m_mockDialogService.Object, null, m_mockParser.Object, m_mockFactory.Object, m_mockFileProxy.Object);
+            
+            //Assert
+            Assert.IsNotNull(systemUnderTest.InputFilePathCommand);
+            Assert.IsNotNull(systemUnderTest.DisplayAddPersonDialogueCommand);
+            Assert.IsNotNull(systemUnderTest.DisplayEditPersonDialogueCommand);
+            Assert.IsNotNull(systemUnderTest.RemovePersonCommand);
+            Assert.IsFalse(systemUnderTest.HaveLoadedPeople);
+        }
 
-            var systemUnderTest = new MainWindowViewModel(personListVMMock.Object, parserMock.Object, factoryMock.Object);
-
-            parserMock.Setup(mock => mock.LoadPeopleFromFile(k_filePath, null)).Returns(mockPeople).Verifiable();
-            factoryMock.Setup(mock => mock.CreatePeopleViewModels(mockPeople)).Returns(mockPeopleVMs).Verifiable();
-            personListVMMock.Setup(mock => mock.populatePeople(mockPeopleVMs)).Verifiable();
-
-            //Act
-            systemUnderTest.InputFileFromPath(k_filePath);
+        [Test]
+        public void ConstructorTest_NullParameters()
+        {
+            // Act
+            var systemUnderTest = new MainWindowViewModel();
 
             //Assert
-            parserMock.Verify(mock => mock.LoadPeopleFromFile(k_filePath, null), Times.Once);
-            factoryMock.Verify(mock => mock.CreatePeopleViewModels(mockPeople), Times.Once);
-            personListVMMock.Verify(mock => mock.populatePeople(mockPeopleVMs), Times.Once);
+            Assert.IsNotNull(systemUnderTest.InputFilePathCommand);
+            Assert.IsNotNull(systemUnderTest.DisplayAddPersonDialogueCommand);
+            Assert.IsNotNull(systemUnderTest.DisplayEditPersonDialogueCommand);
+            Assert.IsNotNull(systemUnderTest.RemovePersonCommand);
+            Assert.IsNotNull(systemUnderTest.PersonListVM);
+            Assert.IsFalse(systemUnderTest.HaveLoadedPeople);
         }
-	}
+
+        [Test]
+        public async Task LoadPeopleAsyncTest()
+        {
+            // Arrange
+            var mockPerson1 = new Mock<IPerson>();
+            var mockPerson2 = new Mock<IPerson>();
+            List<IPerson> people = new List<IPerson> { mockPerson1.Object, mockPerson2.Object };
+            var mockPersonVM1 = new Mock<IPersonViewModel>();
+            var mockPersonVM2 = new Mock<IPersonViewModel>();
+            ObservableCollection<IPersonViewModel> peopleVMs = new ObservableCollection<IPersonViewModel>{ mockPersonVM1.Object, mockPersonVM2.Object };
+            m_mockFactory.Setup(mock => mock.CreatePeopleViewModels(people)).Returns(peopleVMs).Verifiable();
+            string[] fakePeopleStrings = new string[] { k_fakePersonString };
+            m_mockFileProxy.Setup(mock => mock.ReadLinesFromFile()).Returns(fakePeopleStrings).Verifiable();
+            m_mockParser.Setup(mock => mock.ParseStringsToPeople(fakePeopleStrings)).Returns(people).Verifiable();
+            m_mockPersonListVM.Setup(mock => mock.populatePeople(peopleVMs)).Verifiable();
+            var systemUnderTest = new MainWindowViewModel(null
+                , m_mockPersonListVM.Object
+                , m_mockParser.Object
+                , m_mockFactory.Object
+                , m_mockFileProxy.Object);
+
+            //Act
+            await systemUnderTest.LoadPeopleAsync();
+
+            // Assert
+            m_mockFileProxy.Verify(x => x.ReadLinesFromFile(), Times.Once);
+            m_mockFactory.Verify(mock => mock.CreatePeopleViewModels(people), Times.Once);
+            m_mockParser.Verify(mock => mock.ParseStringsToPeople(fakePeopleStrings), Times.Once);
+            m_mockPersonListVM.Verify(mock => mock.populatePeople(peopleVMs), Times.Once);
+            Assert.IsTrue(systemUnderTest.HaveLoadedPeople);
+        }
+
+        [Test]
+        public void OpenFileCommunication_ValidFilePath()
+        {
+            //Arrange
+            var systemUnderTest = new MainWindowViewModel();
+
+            //Act
+            bool result = systemUnderTest.OpenFileCommunication(k_validFilePath);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void OpenFileCommunication_InvalidFilePath()
+        {
+            //Arrange
+            var systemUnderTest = new MainWindowViewModel();
+
+            //Act and Assert
+            try
+            {
+                bool result = systemUnderTest.OpenFileCommunication(k_invalidFilePath);
+                Assert.IsFalse(result);
+            }
+            catch (FileCommunicationException)
+            {
+                // expected behaviour
+            }
+        }
+
+        [Test]
+        public void DisplayAddPersonDialogTest_AddedTest()
+        {
+            // Arrange
+            var systemUnderTest = new MainWindowViewModel(m_mockDialogService.Object, m_mockPersonListVM.Object);
+            m_mockDialogService.Setup(mock => mock.ShowDialog(It.IsAny<AddPersonDialogueViewModel>())).Returns(true).Verifiable();
+            m_mockPersonListVM.Setup(mock => mock.AddPersonViewModel(It.IsAny<PersonViewModel>())).Verifiable();
+
+            //Act
+            systemUnderTest.DisplayAddPersonDialogue(null);
+
+            //Assert
+            m_mockDialogService.Verify(mock => mock.ShowDialog(It.IsAny<AddPersonDialogueViewModel>()), Times.Once);
+            m_mockPersonListVM.Verify(mock => mock.AddPersonViewModel(It.IsAny<PersonViewModel>()), Times.Once);
+
+        }
+
+        [Test]
+        public void DisplayAddPersonDialogTest_CancelledTest()
+        {
+            // Arrange
+            var systemUnderTest = new MainWindowViewModel(m_mockDialogService.Object, m_mockPersonListVM.Object);
+            m_mockDialogService.Setup(mock => mock.ShowDialog(It.IsAny<AddPersonDialogueViewModel>())).Returns(false).Verifiable();
+            m_mockPersonListVM.Setup(mock => mock.AddPersonViewModel(It.IsAny<PersonViewModel>())).Verifiable();
+
+            //Act
+            systemUnderTest.DisplayAddPersonDialogue(null);
+
+            //Assert
+            m_mockDialogService.Verify(mock => mock.ShowDialog(It.IsAny<AddPersonDialogueViewModel>()), Times.Once);
+            m_mockPersonListVM.Verify(mock => mock.AddPersonViewModel(It.IsAny<PersonViewModel>()), Times.Never);
+        }
+
+        [Test]
+        public void DisplayEditPersonDialogTest()
+        {
+            // Arrange
+            var systemUnderTest = new MainWindowViewModel(m_mockDialogService.Object);
+            var mockPersonViewModel = new Mock<IPersonViewModel>();
+            mockPersonViewModel.Setup(mock => mock.Name).Returns("");
+            mockPersonViewModel.Setup(mock => mock.Address).Returns("");
+            mockPersonViewModel.Setup(mock => mock.Phone).Returns("");
+            mockPersonViewModel.Setup(mock => mock.IsActive).Returns(true);
+            systemUnderTest.SelectedPerson = mockPersonViewModel.Object;
+            m_mockDialogService.Setup(mock => mock.ShowDialog(It.IsAny<EditPersonDialogueViewModel>())).Verifiable();
+
+            //Act
+            systemUnderTest.DisplayEditPersonDialogue(null);
+
+            //Assert
+            m_mockDialogService.Verify(mock => mock.ShowDialog(It.IsAny<EditPersonDialogueViewModel>()), Times.Once);
+        }
+
+        [Test]
+        public void CanRemovePersonTest_SelectedPersonIsNull()
+        {
+            var systemUnderTest = new MainWindowViewModel();
+            bool result = systemUnderTest.CanRemovePerson(null);
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void CanRemovePersonTest_SelectedPersonIsNotNull()
+        {
+            // Arrange
+            var systemUnderTest = new MainWindowViewModel();
+            var mockPersonViewModel = new Mock<IPersonViewModel>();
+            systemUnderTest.SelectedPerson = mockPersonViewModel.Object;
+
+            //Act
+            bool result = systemUnderTest.CanRemovePerson(null);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void CanDisplayEditPersonDialogTest_SelectedPersonIsNull()
+        {
+            var systemUnderTest = new MainWindowViewModel();
+            bool result = systemUnderTest.CanDisplayEditPersonDialogue(null);
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void CanDisplayEditPersonDialogTest_SelectedPersonIsNotActive()
+        {
+            // Arrange
+            var systemUnderTest = new MainWindowViewModel();
+            var mockPersonViewModel = new Mock<IPersonViewModel>();
+            mockPersonViewModel.Setup(mock => mock.IsActive).Returns(false);
+            systemUnderTest.SelectedPerson = mockPersonViewModel.Object;
+
+            //Act
+            bool result = systemUnderTest.CanDisplayEditPersonDialogue(null);
+
+            //Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void CanDisplayEditPersonDialogTest_SelectedPersonIsActive()
+        {
+            // Arrange
+            var systemUnderTest = new MainWindowViewModel();
+            var mockPersonViewModel = new Mock<IPersonViewModel>();
+            mockPersonViewModel.Setup(mock => mock.IsActive).Returns(true);
+            systemUnderTest.SelectedPerson = mockPersonViewModel.Object;
+
+            //Act
+            bool result = systemUnderTest.CanDisplayEditPersonDialogue(null);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void RemovePersonTest()
+        {
+            //Arrange
+            var mockPersonViewModel = new Mock<IPersonViewModel>();
+            var systemUnderTest = new MainWindowViewModel(null, m_mockPersonListVM.Object);
+            systemUnderTest.SelectedPerson = mockPersonViewModel.Object;
+            m_mockPersonListVM.Setup(mock => mock.RemovePersonViewModel(mockPersonViewModel.Object)).Verifiable();
+
+            // Act
+            systemUnderTest.RemovePerson(null);
+
+            //Assert
+            m_mockPersonListVM.Verify(mock => mock.RemovePersonViewModel(mockPersonViewModel.Object), Times.Once);
+        }
+    }
 }

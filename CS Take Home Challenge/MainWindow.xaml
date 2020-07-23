@@ -9,16 +9,16 @@
         Background="DodgerBlue">
     <Window.Resources>
         <local:PersonValueConverter x:Key="IsActiveToForegroundColourConv"/>
-        <local:VisibilityConverter x:Key="HaveFilePathToVisibilityConverter"/>
+        <local:VisibilityConverter x:Key="HaveLoadedPeopleToVisibilityConverter"/>
 
         <DataTemplate x:Key="PeopleHeaderTemplate">
             <TextBlock Grid.Column="0" Width="300" Height="30" Text="{Binding}" local:SortPeopleBehaviour.SortColumnHeader="True" TextAlignment="Center" Background="RoyalBlue" Foreground="AntiqueWhite"/>
         </DataTemplate>
 
-        <Style x:Key="VisibleIfHaveFilePath" TargetType="FrameworkElement">
+        <Style x:Key="VisibleIfHaveLoadedPeople" TargetType="FrameworkElement">
             <Setter Property="Visibility">
                 <Setter.Value>
-                    <Binding Path="HaveFilePath" Mode="OneWay" Converter="{StaticResource HaveFilePathToVisibilityConverter}"/>
+                    <Binding Path="HaveLoadedPeople" Mode="OneWay" Converter="{StaticResource HaveLoadedPeopleToVisibilityConverter}"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -51,8 +51,8 @@
         <ListView ItemsSource="{Binding Path=PersonListVM.People, Mode=OneWay}"
                   x:Name="PeopleListView"
                   SelectionMode="Single"
-                  SelectedItem="{Binding Path=PersonListVM.SelectedPerson, Mode=TwoWay}"
-                  Style="{StaticResource VisibleIfHaveFilePath}"
+                  SelectedItem="{Binding Path=SelectedPerson, Mode=TwoWay}"
+                  Style="{StaticResource VisibleIfHaveLoadedPeople}"
                   DockPanel.Dock="Top"
                   Background="DarkBlue"
                   HorizontalContentAlignment="Center"
@@ -103,7 +103,7 @@
             
         </ListView>
 
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" x:Name="EditPeopleStackPanel" Style="{StaticResource VisibleIfHaveFilePath}" HorizontalAlignment="Center">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" x:Name="EditPeopleStackPanel" Style="{StaticResource VisibleIfHaveLoadedPeople}" HorizontalAlignment="Center">
             <Button Content="Add Person" Width="250" Height="30" Command="{Binding DisplayAddPersonDialogueCommand}"/>
             <Button Content="Edit Person" Width="250" Height="30" Command="{Binding DisplayEditPersonDialogueCommand}"/>
             <Button Content="Remove Person" Width="250" Height="30" Command="{Binding RemovePersonCommand}"/>

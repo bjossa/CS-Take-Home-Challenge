@@ -13,6 +13,7 @@ namespace CsTakeHomeChallengeTest.Converters
     {
         private const string k_white = "AntiqueWhite";
         private const string k_gray = "Gray";
+
         [Test]
         public void Convert_TruetoBlack()
         {

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_Take_Home_Challenge.fileCommunication
+namespace CS_Take_Home_Challenge
 {
-    public interface IFileFacade
+    public interface IMainWindowViewModel
     {
-        string[] ReadLinesFromFile();
     }
 }

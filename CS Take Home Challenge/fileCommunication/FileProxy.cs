@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge.fileCommunication
 {
-    public class FileFacade: IFileFacade
+    public class FileProxy: IFileProxy
     {
         #region Private Fields
         private string m_filePath;
         #endregion
 
         #region Constructors
-        public FileFacade(string filePath = null)
+        public FileProxy(string filePath = null)
         {
             m_filePath = filePath;
         }
@@ -31,6 +31,23 @@ namespace CS_Take_Home_Challenge.fileCommunication
         #endregion
 
         #region Public Methods
+        public string[] ReadLinesFromFile()
+        {
+            if (m_filePath == null)
+            {
+                throw new FileCommunicationException("filePath is null");
+            }
+            string[] unparsedPeople;
+            try
+            {
+                unparsedPeople = File.ReadAllLines(m_filePath);
+            }
+            catch (FileNotFoundException)
+            {
+                throw new FileCommunicationException("invalid file path provided");
+            }
+            return unparsedPeople;
+        }
         #endregion
 
         #region Private Methods
@@ -43,22 +60,5 @@ namespace CS_Take_Home_Challenge.fileCommunication
         #endregion
 
         #endregion
-        public string[] ReadLinesFromFile()
-        {
-            if (m_filePath == null)
-            {
-                throw new FileCommunicationException ("filePath is null");
-            }
-            string[] unparsedPeople;
-            try
-            {
-                unparsedPeople = File.ReadAllLines(m_filePath);
-            }
-            catch (FileNotFoundException)
-            {
-                throw new FileCommunicationException ("invalid file path provided");
-            }
-            return unparsedPeople;
-        }
     }
 }

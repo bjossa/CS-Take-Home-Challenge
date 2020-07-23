@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CS_Take_Home_Challenge.DialogService.DialogViewModels;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ using System.Windows.Input;
 
 namespace CS_Take_Home_Challenge.DialogService.Dialogs
 {
-    class EditPersonDialogueViewModel: IDialogRequestClose
+    public class EditPersonDialogueViewModel:
+        SubmitPersonInfoDialogViewModel
     {
         #region Private Fields
         private IPersonViewModel m_personViewModel;
@@ -18,34 +20,40 @@ namespace CS_Take_Home_Challenge.DialogService.Dialogs
         public EditPersonDialogueViewModel(IPersonViewModel personViewModel)
         {
             m_personViewModel = personViewModel;
-            //OkCommand = new CustomCommand(p => CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true)));
-            //CancelCommand = new CustomCommand(p => CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false)));
+            ConfirmEditPersonCommand = new CustomCommand(ConfirmEditPerson, (o) => { return true; });
+            CancelEditPersonCommand = new CustomCommand(CancelEditPerson, (o) => { return true; });
+            Name = m_personViewModel.Name;
+            Address = m_personViewModel.Address;
+            Phone = m_personViewModel.Phone;
+            IsActive = m_personViewModel.IsActive;
         }
         #endregion
 
         #region Properties
         #endregion
 
-        #region Dependency Properties
-        #endregion
-
         #region Commands
-        public ICommand OkCommand { get; }
-        public ICommand CancelCommand { get; }
+        public ICommand ConfirmEditPersonCommand { get; }
+        public ICommand CancelEditPersonCommand { get; }
         #endregion
 
         #region Public Methods
+        public void ConfirmEditPerson(object o)
+        {
+            m_personViewModel.Name = Name;
+            m_personViewModel.Address = Address;
+            m_personViewModel.Phone = Phone;
+            m_personViewModel.IsActive = IsActive;
+            base.RaiseCloseRequestedEvent(this, new DialogCloseRequestedEventArgs(true));
+        }
+
+        public void CancelEditPerson(object obj)
+        {
+            base.RaiseCloseRequestedEvent(this, new DialogCloseRequestedEventArgs(false));
+        }
         #endregion
 
         #region Private Methods
         #endregion
-
-        #region Specific Interface Implementation
-
-        #region Implementation of <IDialogRequestClose>
-        public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
-        #endregion
-
-        #endregion
-        }
+    }
 }
