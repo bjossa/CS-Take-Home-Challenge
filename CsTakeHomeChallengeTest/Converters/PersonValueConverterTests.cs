@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CS_Take_Home_Challenge;
+﻿using CS_Take_Home_Challenge;
 using NUnit.Framework;
 
-namespace CsTakeHomeChallengeTest
+namespace CsTakeHomeChallengeTest.Converters
 {
     [TestFixture]
     class PersonValueConverterTests
     {
+        private const string k_white = "AntiqueWhite";
+        private const string k_gray = "Gray";
+
         [Test]
         public void Convert_TruetoBlack()
         {
@@ -21,7 +19,7 @@ namespace CsTakeHomeChallengeTest
             var result = systemUnderTest.Convert(true, null, null, null);
 
             // Assert
-            Assert.AreEqual(result, "Black");
+            Assert.AreEqual(result, k_white);
         }
 
         [Test]
@@ -34,7 +32,7 @@ namespace CsTakeHomeChallengeTest
             var result = systemUnderTest.Convert(false, null, null, null);
 
             // Assert
-            Assert.AreEqual(result, "Gray");
+            Assert.AreEqual(result, k_gray);
         }
     }
 }
