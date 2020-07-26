@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CS_Take_Home_Challenge;
+﻿using CS_Take_Home_Challenge;
 using CS_Take_Home_Challenge.Factory;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CsTakeHomeChallengeTest.factory
 {
     [TestFixture]
     class PersonFactoryTests
     {
-        private string k_personName = "name";
-        private string k_personAddress = "address";
-        private string k_personPhone = "phone";
-        private bool k_personIsActive = true;
+        private const string k_personName = "name";
+        private const string k_personAddress = "address";
+        private const string k_personPhone = "phone";
+        private const bool k_personIsActive = true;
         private Mock<IPerson> m_mockPerson;
 
         [SetUp]

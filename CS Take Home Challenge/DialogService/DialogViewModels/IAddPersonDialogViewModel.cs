@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+
 
 namespace CS_Take_Home_Challenge.DialogService.DialogViewModels
 {
-    interface IAddPersonDialogViewModel
+    interface IAddPersonDialogViewModel:
+       INotifyPropertyChanged
+        , IDialogRequestClose
     {
         string Name { get; set; }
+
         string Address { get; set; }
+
         string Phone { get; set; }
+
         bool IsActive { get; set; }
 
         IPersonViewModel AddedPersonViewModel { get; set; }

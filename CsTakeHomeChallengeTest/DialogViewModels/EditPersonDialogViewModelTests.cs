@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CS_Take_Home_Challenge;
-using CS_Take_Home_Challenge.Factory;
+﻿using CS_Take_Home_Challenge;
+using CS_Take_Home_Challenge.DialogService;
+using CS_Take_Home_Challenge.DialogService.Dialogs;
 using Moq;
 using NUnit.Framework;
-using CS_Take_Home_Challenge.DialogService.Dialogs;
-using CS_Take_Home_Challenge.DialogService;
 
 namespace CsTakeHomeChallengeTest.DialogViewModels
 {
@@ -16,14 +11,14 @@ namespace CsTakeHomeChallengeTest.DialogViewModels
     {
 
         private DialogCloseRequestedEventArgs testEventArgs;
-        private string k_personName = "name";
-        private string k_personAddress = "address";
-        private string k_personPhone = "phone";
-        private bool k_personIsActive = true;
-        private string k_personName2 = "name2";
-        private string k_personAddress2 = "address2";
-        private string k_personPhone2 = "phone2";
-        private bool k_personIsActive2 = false;
+        private const string k_personName = "name";
+        private const string k_personAddress = "address";
+        private const string k_personPhone = "phone";
+        private const bool k_personIsActive = true;
+        private const string k_personName2 = "name2";
+        private const string k_personAddress2 = "address2";
+        private const string k_personPhone2 = "phone2";
+        private const bool k_personIsActive2 = false;
 
         [Test]
         public void Constructor_Test()

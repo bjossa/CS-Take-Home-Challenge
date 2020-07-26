@@ -2,7 +2,6 @@
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Reflection;
 
 namespace CsTakeHomeChallengeTest.People
 {
@@ -13,11 +12,6 @@ namespace CsTakeHomeChallengeTest.People
         private const string k_personAddress = "testAddress";
         private const string k_personPhone = "testPhone";
         private const bool k_personIsActive = true;
-
-        private const string k_propertyName = "Name";
-        private const string k_propertyAddress = "Address";
-        private const string k_propertyPhone = "Phone";
-        private const string k_propertyIsActive = "IsActive";
 
         [Test]
         public void Constructor_Test()

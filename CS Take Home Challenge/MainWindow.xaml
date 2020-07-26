@@ -6,13 +6,42 @@
         xmlns:local="clr-namespace:CS_Take_Home_Challenge"
         mc:Ignorable="d"
         Title="MainWindow"
-        Background="DodgerBlue">
+        Background="#FF001527">
     <Window.Resources>
+        <!-- edit the default button template-->
+        <ControlTemplate x:Key="ButtonBaseControlTemplate1" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="5">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                    <Setter Property="Foreground" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
         <local:PersonValueConverter x:Key="IsActiveToForegroundColourConv"/>
         <local:VisibilityConverter x:Key="HaveLoadedPeopleToVisibilityConverter"/>
 
         <DataTemplate x:Key="PeopleHeaderTemplate">
-            <TextBlock Grid.Column="0" Width="300" Height="30" Text="{Binding}" local:SortPeopleBehaviour.SortColumnHeader="True" TextAlignment="Center" Background="RoyalBlue" Foreground="AntiqueWhite"/>
+            <TextBlock Grid.Column="0" Width="300" Height="30" Text="{Binding}" local:SortPeopleBehaviour.SortColumnHeader="True" TextAlignment="Center" Background="#FF293A54" Foreground="AntiqueWhite" FontSize="17"/>
         </DataTemplate>
 
         <Style x:Key="VisibleIfHaveLoadedPeople" TargetType="FrameworkElement">
@@ -24,8 +53,13 @@
         </Style>
 
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="MediumBlue"/>
             <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Setter Property="Template" Value="{StaticResource ButtonBaseControlTemplate1}"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Height"  Value="30"/>
+            <Setter Property="Width"  Value="100"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Navy"/>
         </Style>
 
         <Style TargetType="{x:Type TextBlock}" x:Key="PersonDataTextBlockStyle">
@@ -33,33 +67,92 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="Foreground" Value="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="Navy"/>
+            <Setter Property="Background" Value="#FF001527"/>
             <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="15"/>
         </Style>
-    </Window.Resources>
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
 
+        <!-- edit the default textbox style-->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    
     <DockPanel HorizontalAlignment="Center">
         <!-- input button and text field for filePath-->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center">
-            <TextBox x:Name="FilePathInputTextBox" Width="300" Height="30" Text="Enter filePath here"/>
-            <Button Content="Submit" Width="250" Height="30" Command="{Binding InputFilePathCommand}" CommandParameter="{Binding ElementName=FilePathInputTextBox, Path=Text}"/>
+            <TextBox x:Name="FilePathInputTextBox" Width="300" Height="30" Text="Enter filePath here" Margin="5" BorderThickness="2" FontSize="15" Background="#FF293A54" Foreground="White"/>
+            <Button Content="Submit" Width="250" Height="30" Command="{Binding InputFilePathCommand}" CommandParameter="{Binding ElementName=FilePathInputTextBox, Path=Text}" Margin="5"/>
         </StackPanel>
 
-        <!-- todo: add a submit button so that a user can edit a person without submitting the changes right away, and also they can cancel the changes they were going to make with a cancel button. idea: Have something
-                        in the button that the textboxes are listening to, and when you submit, that things changes, and then this triggers an event in the textbox for it to forward the info in its text to the bound property.
-                        upon clicking cancel, you would just update the textboxes with what's currently in the model, since that hasn't changed, and change the editability of the textboxes back to false.-->
+        <!-- display the buttons for editing the list of people-->
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Style="{StaticResource VisibleIfHaveLoadedPeople}" HorizontalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Width" Value="250"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="Add Person" Command="{Binding DisplayAddPersonDialogueCommand}"/>
+            <Button Content="Edit Person" Command="{Binding DisplayEditPersonDialogueCommand}"/>
+            <Button Content="Remove Person" Command="{Binding RemovePersonCommand}"/>
+        </StackPanel>
+
+        <!-- display the list of People -->
         <ListView ItemsSource="{Binding Path=PersonListVM.People, Mode=OneWay}"
-                  x:Name="PeopleListView"
                   SelectionMode="Single"
                   SelectedItem="{Binding Path=SelectedPerson, Mode=TwoWay}"
                   Style="{StaticResource VisibleIfHaveLoadedPeople}"
-                  DockPanel.Dock="Top"
-                  Background="DarkBlue"
+                  Background="#FF001527"
                   HorizontalContentAlignment="Center"
                   Height="640"
                  >
             <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
+                <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
@@ -100,52 +193,9 @@
                 </GridView>
 
             </ListView.View>
-            
-        </ListView>
 
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" x:Name="EditPeopleStackPanel" Style="{StaticResource VisibleIfHaveLoadedPeople}" HorizontalAlignment="Center">
-            <Button Content="Add Person" Width="250" Height="30" Command="{Binding DisplayAddPersonDialogueCommand}"/>
-            <Button Content="Edit Person" Width="250" Height="30" Command="{Binding DisplayEditPersonDialogueCommand}"/>
-            <Button Content="Remove Person" Width="250" Height="30" Command="{Binding RemovePersonCommand}"/>
-        </StackPanel>
+        </ListView>
     </DockPanel>
 
 
 </Window>
-
-    
-    
-    
-    <!--
-     Display People as a stackpanel
-<ListBox ItemsSource="{Binding Path=People, Mode=OneWay}"
-				 Visibility="{Binding PeopleVisibility, Mode=OneWay}"
-                 x:Name="PeopleListBox">
-
-    <ListBox.ItemsPanel>
-        <ItemsPanelTemplate>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"/>
-        </ItemsPanelTemplate>
-    </ListBox.ItemsPanel>
-
-    <ListBox.ItemTemplate>
-        <DataTemplate>
-            <Grid Width="800">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Content="Edit" Height="50" Grid.Column="0" Command="{Binding ChangePersonEditabilityCommand}"/>
-                < todo: make this change from a textblock to a textbox when a user hits the edit button. The content of this control is fed to a converter which takes in the editability and spits out a textblock or textbox appropriately>
-                <TextBox Width="100" Height="50" Grid.Column="1" Text="{Binding Path=Name, Mode=TwoWay}" IsReadOnly="{Binding Path=IsReadOnly}"
-                                   Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
-                <TextBox Width="100" Height="50" Grid.Column="2" Text="{Binding Path=Address, Mode=TwoWay}" IsReadOnly="{Binding Path=IsReadOnly}"
-                               Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
-                <TextBox Width="100" Height="50" Grid.Column="3" Text="{Binding Path=Phone, Mode=TwoWay}" IsReadOnly="{Binding Path=IsReadOnly}"
-                               Foreground="{Binding IsActive, Converter={StaticResource IsActiveToForegroundColourConv}}"/>
-            </Grid>
-        </DataTemplate>
-    </ListBox.ItemTemplate>
-</ListBox> -->

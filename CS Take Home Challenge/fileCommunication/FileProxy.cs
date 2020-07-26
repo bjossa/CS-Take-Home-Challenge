@@ -1,63 +1,33 @@
-﻿using Castle.Components.DictionaryAdapter;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CS_Take_Home_Challenge.fileCommunication
+﻿namespace CS_Take_Home_Challenge.fileCommunication
 {
-    public class FileProxy: IFileProxy
+    public class FileProxy :
+        IFileProxy
     {
         #region Private Fields
+
         private string m_filePath;
+        private IFileWrapper m_fileWrapper;
+
         #endregion
 
         #region Constructors
-        public FileProxy(string filePath = null)
+
+        public FileProxy(string filePath = null, IFileWrapper wrapper = null)
         {
             m_filePath = filePath;
+            m_fileWrapper = wrapper ?? new FileWrapper();
         }
+
         #endregion
 
-        #region Properties
-        #endregion
+        #region implementation of IFileProxy
 
-        #region Dependency Properties
-        #endregion
-
-        #region Commands
-        #endregion
-
-        #region Public Methods
         public string[] ReadLinesFromFile()
         {
-            if (m_filePath == null)
-            {
-                throw new FileCommunicationException("filePath is null");
-            }
             string[] unparsedPeople;
-            try
-            {
-                unparsedPeople = File.ReadAllLines(m_filePath);
-            }
-            catch (FileNotFoundException)
-            {
-                throw new FileCommunicationException("invalid file path provided");
-            }
+            unparsedPeople = m_fileWrapper.ReadAllLinesFromFile(m_filePath);
             return unparsedPeople;
         }
-        #endregion
-
-        #region Private Methods
-        #endregion
-
-        #region Specific Interface Implementation
-
-        #region Implementation of <InterfaceName>
-
-        #endregion
 
         #endregion
     }

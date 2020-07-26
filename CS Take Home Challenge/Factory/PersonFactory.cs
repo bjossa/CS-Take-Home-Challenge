@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge.Factory
 {
-    public class PersonFactory: IPersonFactory
+    public class PersonFactory:
+        IPersonFactory
     {
+        #region implementation of IPersonFactory
+
         public ObservableCollection<IPersonViewModel> CreatePeopleViewModels(ICollection<IPerson> people)
         {
             ObservableCollection<IPersonViewModel> peopleVMs = new ObservableCollection<IPersonViewModel>();
@@ -28,5 +27,7 @@ namespace CS_Take_Home_Challenge.Factory
         {
             return new PersonViewModel(person);
         }
+
+        #endregion
     }
 }

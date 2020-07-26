@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CS_Take_Home_Challenge
 {
-    public class PeopleParsingException : Exception
+    public class PeopleParsingException :
+        Exception
     {
         public PeopleParsingException(string message): base(message)
         {

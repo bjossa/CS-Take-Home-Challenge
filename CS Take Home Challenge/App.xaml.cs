@@ -1,11 +1,4 @@
-﻿using CS_Take_Home_Challenge;
-using CS_Take_Home_Challenge.DialogService.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CS_Take_Home_Challenge.DialogService.Dialogs;
 using System.Windows;
 
 namespace CS_Take_Home_Challenge

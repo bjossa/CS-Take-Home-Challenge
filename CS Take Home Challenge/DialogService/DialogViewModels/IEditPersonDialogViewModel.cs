@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace CS_Take_Home_Challenge.DialogService.DialogViewModels
 {
-    interface IEditPersonDialogViewModel
+    interface IEditPersonDialogViewModel:
+        INotifyPropertyChanged
+        , IDialogRequestClose
     {
         string Name { get; set; }
+
         string Address { get; set; }
+
         string Phone { get; set; }
+
         bool IsActive { get; set; }
 
         void ConfirmEditPerson(object o);

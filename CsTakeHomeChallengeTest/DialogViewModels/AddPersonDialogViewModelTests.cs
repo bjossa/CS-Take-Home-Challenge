@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CS_Take_Home_Challenge;
+﻿using CS_Take_Home_Challenge;
+using CS_Take_Home_Challenge.DialogService;
+using CS_Take_Home_Challenge.DialogService.Dialogs;
 using CS_Take_Home_Challenge.Factory;
 using Moq;
 using NUnit.Framework;
-using CS_Take_Home_Challenge.DialogService.Dialogs;
-using CS_Take_Home_Challenge.DialogService;
 
 namespace CsTakeHomeChallengeTest.DialogViewModels
 {
@@ -17,6 +12,7 @@ namespace CsTakeHomeChallengeTest.DialogViewModels
     {
 
         private DialogCloseRequestedEventArgs testEventArgs;
+        private const string k_emptyString = "";
 
         [Test]
         public void Constructor_Test()
@@ -41,7 +37,7 @@ namespace CsTakeHomeChallengeTest.DialogViewModels
             var mockFactory = new Mock<IPersonFactory>();
             var systemUnderTest = new AddPersonDialogueViewModel(mockFactory.Object);
             var mockPerson = new Mock<IPerson>();
-            mockFactory.Setup(mock => mock.CreatePerson("", "", "", true)).Returns(mockPerson.Object).Verifiable();
+            mockFactory.Setup(mock => mock.CreatePerson(k_emptyString, k_emptyString, k_emptyString, true)).Returns(mockPerson.Object).Verifiable();
             var mockPersonViewModel = new Mock<IPersonViewModel>();
             mockFactory.Setup(mock => mock.CreatePersonViewModel(mockPerson.Object)).Returns(mockPersonViewModel.Object);
             systemUnderTest.CloseRequested += TestEventHandler;
@@ -51,7 +47,7 @@ namespace CsTakeHomeChallengeTest.DialogViewModels
 
             //Assert
             Assert.AreEqual(mockPersonViewModel.Object, systemUnderTest.AddedPersonViewModel);
-            mockFactory.Verify(mock => mock.CreatePerson("", "", "", true), Times.Once);
+            mockFactory.Verify(mock => mock.CreatePerson(k_emptyString, k_emptyString, k_emptyString, true), Times.Once);
             mockFactory.Verify(mock => mock.CreatePersonViewModel(mockPerson.Object), Times.Once);
             Assert.IsNotNull(testEventArgs);
             Assert.AreEqual(true, testEventArgs.DialogResult);
@@ -73,7 +69,7 @@ namespace CsTakeHomeChallengeTest.DialogViewModels
             Assert.AreEqual(false, testEventArgs.DialogResult);
         }
 
-        public void TestEventHandler(object sender, DialogCloseRequestedEventArgs e)
+        private void TestEventHandler(object sender, DialogCloseRequestedEventArgs e)
         {
             testEventArgs = e;
         }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CS_Take_Home_Challenge;
-using NUnit.Framework;
-using Moq;
+﻿using CS_Take_Home_Challenge;
 using CS_Take_Home_Challenge.Factory;
+using Moq;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace CsTakeHomeChallengeTest
 {
@@ -23,7 +19,6 @@ namespace CsTakeHomeChallengeTest
         private const string k_personAddress2 = "123 Main St";
         private const string k_personPhone2 = "6042391234";
         private const bool k_personIsActive2 = false;
-        private const string k_filePath = "nonSenseString";
         private const string k_personStringInvalidNoBool = "Gene,   679 Thurlow St,  7782396673, randomString";
         private const string k_personStringInvalidMissingComma = "Gene,   679 Thurlow St,  7782396673 true";
 
@@ -56,7 +51,6 @@ namespace CsTakeHomeChallengeTest
             mockFactory.Verify(mock => mock.CreatePerson(k_personName2, k_personAddress2, k_personPhone2, k_personIsActive2), Times.Once);
         }
 
-        // todo: look at the factory tests in the PRs to see what you should do here.
         [Test]
         public void ToPersonValidTest()
         {
@@ -70,21 +64,19 @@ namespace CsTakeHomeChallengeTest
             IPerson result = systemUnderTest.ToPerson(k_personString);
 
             //Assert
-            Assert.AreEqual(k_personName, result.Name);
-            Assert.AreEqual(k_personAddress, result.Address);
-            Assert.AreEqual(k_personPhone, result.Phone);
-            Assert.AreEqual(k_personIsActive, result.IsActive);
+            Assert.AreEqual(mockPerson.Object, result);
+            mockFactory.Verify(mock => mock.CreatePerson(k_personName, k_personAddress, k_personPhone, k_personIsActive), Times.Once);
         }
 
-        //[Test]
-        //public void ToPersonInvalidShouldThrowException()
-        //{
-        //    //Arrange
-        //    var systemUnderTest = new PersonParser();
+        [Test]
+        public void ToPerson_InvalidString()
+        {
+            //Arrange
+            var systemUnderTest = new PersonParser();
 
-        //    //Act/Assert
-        //    Assert.Throws(typeof(FileCommunicationException ), () => { systemUnderTest.ToPerson(k_personStringInvalidMissingComma); });
-        //    Assert.Throws(typeof(FileCommunicationException ), () => { systemUnderTest.ToPerson(k_personStringInvalidNoBool); });
-        //}
+            //Act/Assert
+            Assert.Throws(typeof(PeopleParsingException), () => { systemUnderTest.ToPerson(k_personStringInvalidMissingComma); });
+            Assert.Throws(typeof(PeopleParsingException), () => { systemUnderTest.ToPerson(k_personStringInvalidNoBool); });
+        }
     }
 }

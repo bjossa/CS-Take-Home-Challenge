@@ -1,8 +1,6 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using CS_Take_Home_Challenge;
+﻿using CS_Take_Home_Challenge;
 using NUnit.Framework;
+using System.Windows;
 
 namespace CsTakeHomeChallengeTest.Converters
 {
